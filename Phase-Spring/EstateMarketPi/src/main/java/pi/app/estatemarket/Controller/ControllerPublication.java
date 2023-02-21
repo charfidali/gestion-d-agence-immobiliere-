@@ -47,4 +47,19 @@ public class ControllerPublication {
     public void ajouterEtAffecterPublicationAuser(@RequestBody Publication publication, @PathVariable Long userID){
         iServicePublication.ajouterEtAffecterPublicationAuser(publication, userID);
     }
+
+    @GetMapping("/{idPublication}/comments/count")
+    public Long countCommentsByPublicationId(@PathVariable Integer idPublication) {
+        return iServicePublication.countCommentsByPublicationId(idPublication);
+    }
+
+    @GetMapping("/{id}")
+    public Publication getPublicationWithComments(@PathVariable int id) {
+        return iServicePublication.getPublicationWithComments(id);
+    }
+
+    @GetMapping("/mostCommented")
+    public List<Publication> getMostCommentedPublications() {
+        return iServicePublication.getMostCommentedPublications();
+    }
 }

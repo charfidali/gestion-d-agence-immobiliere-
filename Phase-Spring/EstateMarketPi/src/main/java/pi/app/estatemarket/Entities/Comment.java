@@ -1,5 +1,6 @@
 package pi.app.estatemarket.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class Comment implements Serializable {
 
     @ManyToOne
     private User userComment;
-
+    @JsonIgnore
     @ManyToOne
     private Publication commPub;
 

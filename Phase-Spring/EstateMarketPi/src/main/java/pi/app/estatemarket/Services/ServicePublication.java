@@ -9,11 +9,12 @@ import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 @Slf4j
-public class ServicePublication implements IServicePublication{
+public class ServicePublication implements IServicePublication {
     PublicationRepository publicationRepository;
     UserRepository userRepository;
 
@@ -30,7 +31,7 @@ public class ServicePublication implements IServicePublication{
     @Override
     public Publication addPublication(Publication pb) {
 
-       return   publicationRepository.save(pb);
+        return publicationRepository.save(pb);
     }
 
     @Override
@@ -48,7 +49,8 @@ public class ServicePublication implements IServicePublication{
         Publication publication = publicationRepository.findById(IdPublication).orElse(null);
         User user = userRepository.findById(userID).orElse(null);
         publication.setUserPub(user);
-        publicationRepository.save(publication);   }
+        publicationRepository.save(publication);
+    }
 
     @Override
     public void ajouterEtAffecterPublicationAuser(Publication publication, Long userID) {
@@ -56,5 +58,22 @@ public class ServicePublication implements IServicePublication{
         User user = userRepository.findById(userID).orElse(null);
         publication.setUserPub(user);
         publicationRepository.save(publication);
+    }
+
+    @Override
+    public Long countCommentsByPublicationId(Integer idPublication) {
+        return publicationRepository.countCommentsByPublicationId(idPublication);
+    }
+
+    @Override
+    public Publication getPublicationWithComments(int id) {
+        Optional<Publication> optionalPublication = publicationRepository.findPublicationWithCommentsById(id);
+        return optionalPublication.orElseThrow(() -> new RuntimeException("Publication not found"));
+    }
+
+
+    @Override
+    public List<Publication> getMostCommentedPublications() {
+        return publicationRepository.findAllByOrderByCommentsPubDesc();
     }
 }
