@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity(name = "comments")
 @Getter
@@ -15,6 +16,8 @@ public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int IdComment;
+    @Temporal(TemporalType.DATE)
+    private Date DateComment;
     private String DescriptionCommentaire;
 
     @ManyToOne

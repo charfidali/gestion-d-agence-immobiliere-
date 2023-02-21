@@ -17,9 +17,11 @@ public class Publication implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int IdPublication;
+    private String TitrePub;
     @Temporal(TemporalType.DATE)
     private Date DatePublication;
     private String DescriptionPublication;
+
 
     @ManyToOne
     private User userPub;
