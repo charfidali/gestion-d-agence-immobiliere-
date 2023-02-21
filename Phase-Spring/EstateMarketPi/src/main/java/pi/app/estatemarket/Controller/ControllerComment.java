@@ -46,4 +46,9 @@ public class ControllerComment {
     public void AffectPubToComment(@PathVariable int IdComment,@PathVariable int IdPublication){
         iServiceComment.AffectPubToComment(IdComment, IdPublication);
     }
+
+    @PostMapping("/ajouterEtAffecterCommentaireAUserEtCommentaire/{userID}/{IdPublication}")
+    public void ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication){
+        iServiceComment.ajouterEtAffecterCommentaireAUserEtCommentaire(comment, userID, IdPublication);
+    }
 }

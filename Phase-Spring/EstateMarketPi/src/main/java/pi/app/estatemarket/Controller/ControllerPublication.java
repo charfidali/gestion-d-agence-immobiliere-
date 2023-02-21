@@ -41,6 +41,10 @@ public class ControllerPublication {
 @PostMapping("/AffectUserToPub/{userID}/{IdPublication}")
     public void AffectUserToPub ( @PathVariable Long userID, @PathVariable int IdPublication){
         iServicePublication.AffectUserToPub(userID, IdPublication);
+    }
 
+    @PostMapping("/ajouterEtAffecterPublicationAuser/{userID}")
+    public void ajouterEtAffecterPublicationAuser(@RequestBody Publication publication, @PathVariable Long userID){
+        iServicePublication.ajouterEtAffecterPublicationAuser(publication, userID);
     }
 }

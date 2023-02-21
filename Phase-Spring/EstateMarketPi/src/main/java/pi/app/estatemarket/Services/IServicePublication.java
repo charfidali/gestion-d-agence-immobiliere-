@@ -16,4 +16,6 @@ public interface IServicePublication {
     void removePublication (Integer IdPublication);
 
     public void AffectUserToPub (Long userID, int IdPublication);
+
+    public void ajouterEtAffecterPublicationAuser(Publication publication, Long userID);
 }

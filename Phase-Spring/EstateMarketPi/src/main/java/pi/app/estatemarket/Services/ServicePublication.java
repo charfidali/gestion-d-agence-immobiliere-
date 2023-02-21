@@ -49,4 +49,12 @@ public class ServicePublication implements IServicePublication{
         User user = userRepository.findById(userID).orElse(null);
         publication.setUserPub(user);
         publicationRepository.save(publication);   }
+
+    @Override
+    public void ajouterEtAffecterPublicationAuser(Publication publication, Long userID) {
+
+        User user = userRepository.findById(userID).orElse(null);
+        publication.setUserPub(user);
+        publicationRepository.save(publication);
+    }
 }
