@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pi.app.estatemarket.Entities.User;
 import pi.app.estatemarket.Services.IUserService;
 import pi.app.estatemarket.dto.UserDTO;
+import pi.app.estatemarket.dto.UserRequest;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -24,13 +25,13 @@ public class UserController {
     }
     @PostMapping("add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody User user){ userService.createUser(user);}
+    public User createUser(@RequestBody UserRequest userRequest){
+        return userService.createUser(userRequest);}
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("update")
-    public void updateUser( @RequestBody User user){
-        userService.updateUser(user);
+    public void updateUser( @RequestBody UserRequest userRequest){
+        userService.updateUser(userRequest);
     }
-
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("delete/{id}")
     public void deleteUser(@PathVariable long id) {

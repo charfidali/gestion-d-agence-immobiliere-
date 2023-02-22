@@ -2,7 +2,6 @@ package pi.app.estatemarket.dto;
 
 import lombok.*;
 import pi.app.estatemarket.Entities.GenderType;
-
 import java.util.Date;
 
 @Data
