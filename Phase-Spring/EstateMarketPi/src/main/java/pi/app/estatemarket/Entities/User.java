@@ -1,6 +1,8 @@
 package pi.app.estatemarket.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,8 +47,8 @@ public class User implements Serializable {
         @Enumerated(EnumType.STRING)
         @Column(name = "gender")
         private GenderType gender;
-        @JsonIgnore
         @ManyToOne
+        @JoinColumn(name = "role_id")
         private Role role;
         @JsonIgnore
         @OneToMany (mappedBy = "userPub")
@@ -70,5 +72,9 @@ public class User implements Serializable {
         @ManyToMany
         private Set<User> appointments;
 
+        @JsonBackReference
+        public Role getRole() {
+                return role;
+        }
 }
 
