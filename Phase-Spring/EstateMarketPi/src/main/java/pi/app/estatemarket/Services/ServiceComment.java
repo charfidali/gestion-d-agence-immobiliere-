@@ -2,6 +2,7 @@ package pi.app.estatemarket.Services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Entities.Publication;
@@ -9,20 +10,32 @@ import pi.app.estatemarket.Entities.User;
 import pi.app.estatemarket.Repository.CommentRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
+import pi.app.estatemarket.dto.CommentDTO;
+import pi.app.estatemarket.dto.PublicationDTO;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class ServiceComment implements IServiceComment{
     CommentRepository commentRepository;
+    private final ModelMapper modelMapper;
     PublicationRepository publicationRepository;
     UserRepository userRepository;
 
-    @Override
+   /* @Override
     public List<Comment> retrieveAllComments() {
         return commentRepository.findAll();
+    } */
+
+    @Override
+    public List<CommentDTO> getAllComments() {
+        List<Comment> comments = commentRepository.findAll();
+        return comments.stream()
+                .map(comment -> modelMapper.map(comment, CommentDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -2,11 +2,15 @@ package pi.app.estatemarket.Services;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import pi.app.estatemarket.Entities.Publication;
+import pi.app.estatemarket.dto.PublicationDTO;
+import pi.app.estatemarket.dto.UserDTO;
 
 import java.util.List;
 
 public interface IServicePublication {
-    List<Publication> retrieveAllPublications();
+   // List<Publication> retrieveAllPublications();
+
+    List<PublicationDTO> getAllPublications();
 
     Publication updatePublication (Publication pb);
 

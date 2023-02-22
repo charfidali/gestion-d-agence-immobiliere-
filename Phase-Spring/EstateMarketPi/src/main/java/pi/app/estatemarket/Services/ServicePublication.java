@@ -2,25 +2,38 @@ package pi.app.estatemarket.Services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Entities.User;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
+import pi.app.estatemarket.dto.PublicationDTO;
+import pi.app.estatemarket.dto.UserDTO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class ServicePublication implements IServicePublication {
+    private final ModelMapper modelMapper;
     PublicationRepository publicationRepository;
     UserRepository userRepository;
 
-    @Override
+   /* @Override
     public List<Publication> retrieveAllPublications() {
         return publicationRepository.findAll();
+    } */
+
+    @Override
+    public List<PublicationDTO> getAllPublications() {
+        List<Publication> publications = publicationRepository.findAll();
+        return publications.stream()
+                .map(publication -> modelMapper.map(publication, PublicationDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override
