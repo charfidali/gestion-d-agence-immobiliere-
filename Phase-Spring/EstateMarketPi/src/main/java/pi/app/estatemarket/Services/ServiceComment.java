@@ -11,6 +11,7 @@ import pi.app.estatemarket.Repository.CommentRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.CommentDTO;
+import pi.app.estatemarket.dto.PublicationDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;

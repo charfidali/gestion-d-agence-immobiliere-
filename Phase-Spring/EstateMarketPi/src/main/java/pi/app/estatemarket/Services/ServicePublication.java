@@ -9,6 +9,7 @@ import pi.app.estatemarket.Entities.User;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.PublicationDTO;
+import pi.app.estatemarket.dto.UserDTO;
 
 import java.util.List;
 import java.util.Optional;

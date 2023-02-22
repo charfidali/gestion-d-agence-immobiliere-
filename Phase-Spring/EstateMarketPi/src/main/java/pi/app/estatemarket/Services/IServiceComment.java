@@ -1,7 +1,9 @@
 package pi.app.estatemarket.Services;
 
 import pi.app.estatemarket.Entities.Comment;
+import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.dto.CommentDTO;
+import pi.app.estatemarket.dto.PublicationDTO;
 
 import java.util.List;
 
