@@ -26,7 +26,8 @@ public class ServiceComment implements IServiceComment{
     UserRepository userRepository;
 
    /* @Override
-    public List<Comment> retrieveAllComments() {
+    public List<Comment> retrieveAll
+    Comments() {
         return commentRepository.findAll();
     } */
 

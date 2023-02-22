@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Services.IServicePublication;
+import pi.app.estatemarket.dto.PublicationDTO;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ public class ControllerPublication {
     IServicePublication iServicePublication;
 
     @GetMapping("/RetrieveAllPublications")
-    List<Publication> retrieveAllPublications(){
+    List<PublicationDTO> retrieveAllPublications(){
 
-        return iServicePublication.retrieveAllPublications();
+        return iServicePublication.getAllPublications();
     }
     @PutMapping("/UpdatePublication")
     Publication updatePublication (@RequestBody Publication pb){

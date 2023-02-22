@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Services.IServiceComment;
+import pi.app.estatemarket.dto.CommentDTO;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ public class ControllerComment {
 
     IServiceComment iServiceComment;
     @GetMapping("/RetrieveAllComments")
-    List<Comment> retrieveAllComments(){
+    List<CommentDTO> retrieveAllComments(){
 
-        return iServiceComment.retrieveAllComments();
+        return iServiceComment.getAllComments();
     }
 
     @PutMapping("/UpdateComment")
