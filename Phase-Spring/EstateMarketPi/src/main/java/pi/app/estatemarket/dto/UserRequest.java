@@ -2,6 +2,7 @@ package pi.app.estatemarket.dto;
 
 import lombok.*;
 import pi.app.estatemarket.Entities.GenderType;
+
 import java.util.Date;
 
 @Data
@@ -9,7 +10,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserRequest {
     private long userID;
     private String username;
     private String lastName;
