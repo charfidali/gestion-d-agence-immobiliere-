@@ -25,7 +25,7 @@ public class Publication implements Serializable {
 
 @JsonIgnore
     @ManyToOne
-    private User userPub;
+    private UserApp userAppPub;
 
 //@JsonIgnore //au cas où lezemesh les commentaires yokhrjou maa les listes de pubs
     @OneToMany(mappedBy = "commPub")

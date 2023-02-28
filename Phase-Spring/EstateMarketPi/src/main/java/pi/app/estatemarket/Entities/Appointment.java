@@ -25,6 +25,6 @@ public class Appointment implements Serializable {
     private Announcement announcementApp;
 
     @ManyToMany(mappedBy = "appointments")
-    private Set<User> users;
+    private Set<UserApp> userApps;
 
 }

@@ -5,11 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import pi.app.estatemarket.Entities.Publication;
+<<<<<<< HEAD
 import pi.app.estatemarket.Entities.User;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.PublicationDTO;
 import pi.app.estatemarket.dto.UserDTO;
+=======
+import pi.app.estatemarket.Entities.UserApp;
+import pi.app.estatemarket.Repository.PublicationRepository;
+import pi.app.estatemarket.Repository.UserRepository;
+import pi.app.estatemarket.dto.PublicationDTO;
+>>>>>>> sami
 
 import java.util.List;
 import java.util.Optional;
@@ -60,16 +67,26 @@ public class ServicePublication implements IServicePublication {
     @Override
     public void AffectUserToPub(Long userID, int IdPublication) {
         Publication publication = publicationRepository.findById(IdPublication).orElse(null);
+<<<<<<< HEAD
         User user = userRepository.findById(userID).orElse(null);
         publication.setUserPub(user);
+=======
+        UserApp userApp = userRepository.findById(userID).orElse(null);
+        publication.setUserAppPub(userApp);
+>>>>>>> sami
         publicationRepository.save(publication);
     }
 
     @Override
     public void ajouterEtAffecterPublicationAuser(Publication publication, Long userID) {
 
+<<<<<<< HEAD
         User user = userRepository.findById(userID).orElse(null);
         publication.setUserPub(user);
+=======
+        UserApp userApp = userRepository.findById(userID).orElse(null);
+        publication.setUserAppPub(userApp);
+>>>>>>> sami
         publicationRepository.save(publication);
     }
 
