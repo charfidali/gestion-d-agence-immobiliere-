@@ -24,4 +24,7 @@ public interface PublicationRepository extends JpaRepository<Publication, Intege
 
     //pub les plus commentées
     List<Publication> findAllByOrderByCommentsPubDesc();
+
+    //Récupérer les publications triées par ordre décroissant du nombre de likes
+    List<Publication> findByOrderByLikePubDesc();
 }

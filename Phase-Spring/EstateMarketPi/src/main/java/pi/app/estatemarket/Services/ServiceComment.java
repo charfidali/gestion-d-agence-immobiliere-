@@ -11,7 +11,6 @@ import pi.app.estatemarket.Repository.CommentRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.CommentDTO;
-import pi.app.estatemarket.dto.PublicationDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,5 +74,12 @@ public class ServiceComment implements IServiceComment{
         comment.setUserComment(user);
         commentRepository.save(comment);
 
+    }
+
+    @Override
+    public List<Comment> getAllFilteredComments() {
+        return commentRepository.findAllFiltered().stream()
+                .peek(comment -> comment.setDescriptionCommentaire(comment.getFilteredDescriptionCommentaire()))
+                .collect(Collectors.toList());
     }
 }

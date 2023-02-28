@@ -1,6 +1,8 @@
 package pi.app.estatemarket.Controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Services.IServicePublication;
@@ -14,53 +16,54 @@ public class ControllerPublication {
     IServicePublication iServicePublication;
 
     @GetMapping("/RetrieveAllPublications")
-    List<PublicationDTO> retrieveAllPublications(){
+    List<Publication> retrieveAllPublications(){
 
         return iServicePublication.getAllPublications();
     }
-    @PutMapping("/UpdatePublication")
-    Publication updatePublication (@RequestBody Publication pb){
+    @PutMapping("/UpdatePublication/{ID}")
+    Publication updatePublication (@PathVariable int ID, @RequestBody Publication publication){
 
-        return iServicePublication.updatePublication(pb);
+        return iServicePublication.updatePublication(ID, publication);
     }
 
-    @PostMapping("/AddPublication")
-    Publication  addPublication (@RequestBody  Publication pb){
-
-        return iServicePublication.addPublication(pb);
-    }
     @GetMapping("/RetrievePublication/{IdPublication}")
-    Publication retrievePublication (@PathVariable Integer IdPublication){
-        return iServicePublication.retrievePublication(IdPublication);
+    ResponseEntity<Publication> retrievePublication (@PathVariable Integer IdPublication){
+        Publication publication = iServicePublication.retrievePublication(IdPublication);
+        return ResponseEntity.ok().body(publication);
     }
 @DeleteMapping("/DeletePublication/{IdPublication}")
     void removePublication (@PathVariable Integer IdPublication){
         iServicePublication.removePublication(IdPublication);
-
-
 }
-@PostMapping("/AffectUserToPub/{userID}/{IdPublication}")
-    public void AffectUserToPub ( @PathVariable Long userID, @PathVariable int IdPublication){
-        iServicePublication.AffectUserToPub(userID, IdPublication);
-    }
 
     @PostMapping("/ajouterEtAffecterPublicationAuser/{userID}")
     public void ajouterEtAffecterPublicationAuser(@RequestBody Publication publication, @PathVariable Long userID){
         iServicePublication.ajouterEtAffecterPublicationAuser(publication, userID);
     }
 
-    @GetMapping("/{idPublication}/comments/count")
+    @GetMapping("Afficher le nombre de commentaire par publication/{idPublication}")
     public Long countCommentsByPublicationId(@PathVariable Integer idPublication) {
         return iServicePublication.countCommentsByPublicationId(idPublication);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/Afficher tous les commentaire d'une publication/{id}")
     public Publication getPublicationWithComments(@PathVariable int id) {
         return iServicePublication.getPublicationWithComments(id);
     }
 
-    @GetMapping("/mostCommented")
-    public List<Publication> getMostCommentedPublications() {
-        return iServicePublication.getMostCommentedPublications();
+    @GetMapping("/Afficher toutes les publications avec les commentaires décroissants")
+    public List<Publication> getPopularPublications() {
+        return iServicePublication.getPublicationsOrderByLikes();
     }
+
+    @PostMapping("/like/{IdPublication}/{userID}")
+    public ResponseEntity<String> addLikeToPublication(@PathVariable int IdPublication, @PathVariable long userID){
+        try {
+            iServicePublication.addLikeToPublication(IdPublication, userID);
+            return ResponseEntity.ok("Like added to post with Id " + IdPublication + " by user with Id " + userID);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding like: " + e.getMessage());
+        }
+    }
+
 }

@@ -22,4 +22,6 @@ public interface IServiceComment {
     public void AffectPubToComment(int IdComment, int IdPublication);
 
     public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication );
+
+    List<Comment> getAllFilteredComments();
 }

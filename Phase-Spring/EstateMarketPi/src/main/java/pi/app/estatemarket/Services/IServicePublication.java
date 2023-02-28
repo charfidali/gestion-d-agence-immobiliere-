@@ -1,26 +1,20 @@
 package pi.app.estatemarket.Services;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import pi.app.estatemarket.Entities.Publication;
-import pi.app.estatemarket.dto.PublicationDTO;
-import pi.app.estatemarket.dto.UserDTO;
 
 import java.util.List;
 
 public interface IServicePublication {
    // List<Publication> retrieveAllPublications();
 
-    List<PublicationDTO> getAllPublications();
+    List<Publication> getAllPublications();
 
-    Publication updatePublication (Publication pb);
+    Publication updatePublication (int ID, Publication publication);
 
-    public Publication addPublication (Publication pb);
 
     Publication retrievePublication (Integer IdPublication);
 
     void removePublication (Integer IdPublication);
-
-    public void AffectUserToPub (Long userID, int IdPublication);
 
     public void ajouterEtAffecterPublicationAuser(Publication publication, Long userID);
 
@@ -28,4 +22,13 @@ public interface IServicePublication {
 
     public Publication getPublicationWithComments(int id);
     public List<Publication> getMostCommentedPublications();
+
+
+    List<Publication> getPublicationsOrderByLikes();
+
+    void addLikeToPublication(int IdPublication, long userID);
+
+
+   // public void AffectUserToPub (Long userID, int IdPublication);
+    //    public Publication addPublication (Publication pb);
 }

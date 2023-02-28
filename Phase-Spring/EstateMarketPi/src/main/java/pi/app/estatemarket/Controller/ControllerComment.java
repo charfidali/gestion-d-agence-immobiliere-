@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Services.IServiceComment;
 import pi.app.estatemarket.dto.CommentDTO;
+import pi.app.estatemarket.dto.UserDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -51,5 +53,10 @@ public class ControllerComment {
     @PostMapping("/ajouterEtAffecterCommentaireAUserEtCommentaire/{userID}/{IdPublication}")
     public void ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication){
         iServiceComment.ajouterEtAffecterCommentaireAUserEtCommentaire(comment, userID, IdPublication);
+    }
+
+    @GetMapping("/filtered")
+    public List<Comment> getAllFilteredComments() {
+        return iServiceComment.getAllFilteredComments();
     }
 }

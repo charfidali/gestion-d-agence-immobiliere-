@@ -4,16 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Entities.User;
+import pi.app.estatemarket.Repository.LikeeRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
-import pi.app.estatemarket.dto.PublicationDTO;
-import pi.app.estatemarket.dto.UserDTO;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -22,6 +21,7 @@ public class ServicePublication implements IServicePublication {
     private final ModelMapper modelMapper;
     PublicationRepository publicationRepository;
     UserRepository userRepository;
+    LikeeRepository likeeRepository;
 
    /* @Override
     public List<Publication> retrieveAllPublications() {
@@ -29,27 +29,32 @@ public class ServicePublication implements IServicePublication {
     } */
 
     @Override
-    public List<PublicationDTO> getAllPublications() {
-        List<Publication> publications = publicationRepository.findAll();
+    public List<Publication> getAllPublications() {
+        return publicationRepository.findAll();
+    }
+/*        List<Publication> publications = publicationRepository.findAll();
         return publications.stream()
                 .map(publication -> modelMapper.map(publication, PublicationDTO.class))
                 .collect(Collectors.toList());
-    }
+    }*/
 
     @Override
-    public Publication updatePublication(Publication pb) {
-        return publicationRepository.save(pb);
-    }
-
-    @Override
-    public Publication addPublication(Publication pb) {
-
-        return publicationRepository.save(pb);
+    public Publication updatePublication(int ID, Publication publication ) {
+        return publicationRepository.findById(ID)
+                .map(publication1 -> {
+                    publication1.setDatePublication(publication.getDatePublication());
+                    publication1.setDescriptionPublication(publication.getDescriptionPublication());
+                    publication1.setTitrePub(publication.getTitrePub());
+                    return publicationRepository.save(publication1);
+                }).orElseThrow(() -> new RuntimeException("Publication non trouvé !"));
     }
 
     @Override
     public Publication retrievePublication(Integer IdPublication) {
-        return publicationRepository.findById(IdPublication).get();
+        Publication post = publicationRepository.findById(IdPublication).orElse(null);
+        post.incrementViews(); // incrémente le nombre de vues à chaque consultation
+        publicationRepository.save(post);
+        return post;
     }
 
     @Override
@@ -57,13 +62,6 @@ public class ServicePublication implements IServicePublication {
         publicationRepository.deleteById(IdPublication);
     }
 
-    @Override
-    public void AffectUserToPub(Long userID, int IdPublication) {
-        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
-        User user = userRepository.findById(userID).orElse(null);
-        publication.setUserPub(user);
-        publicationRepository.save(publication);
-    }
 
     @Override
     public void ajouterEtAffecterPublicationAuser(Publication publication, Long userID) {
@@ -89,4 +87,23 @@ public class ServicePublication implements IServicePublication {
     public List<Publication> getMostCommentedPublications() {
         return publicationRepository.findAllByOrderByCommentsPubDesc();
     }
+
+    @Override
+    public List<Publication> getPublicationsOrderByLikes() {
+        return publicationRepository.findByOrderByLikePubDesc();
+    }
+
+    @Override
+    public void addLikeToPublication(int IdPublication, long userID) {
+        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
+        User user = userRepository.findById(userID).orElse(null);
+        Likee likee = new Likee();
+        likee.setPubL(publication);
+        likee.setUserL(user);
+        publication.setLikePub(IdPublication);
+        likeeRepository.save(likee);
+        publicationRepository.save(publication);
+    }
+
+
 }
