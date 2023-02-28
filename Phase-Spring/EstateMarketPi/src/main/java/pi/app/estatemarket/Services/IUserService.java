@@ -10,16 +10,9 @@ import java.util.List;
 public interface IUserService {
     List<UserDTO> getAllUsers();
 
-<<<<<<< HEAD
-    User createUser(UserRequest userRequest);
 
-    User updateUser( UserRequest userRequest);
-=======
     UserApp createUser(UserRequest userRequest);
-
-    UserApp updateUser(UserRequest userRequest);
->>>>>>> sami
-
+    UserApp updateUser( UserRequest userRequest);
     void deleteUser(long id);
     UserDTO getUserById(long id);
 }

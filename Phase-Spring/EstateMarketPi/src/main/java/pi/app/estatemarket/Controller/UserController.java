@@ -25,16 +25,14 @@ public class UserController {
     }
     @PostMapping("add")
     @ResponseStatus(HttpStatus.CREATED)
-<<<<<<< HEAD
-    public User createUser(@RequestBody UserRequest userRequest){
-=======
+
     public UserApp createUser(@RequestBody UserRequest userRequest){
->>>>>>> sami
         return userService.createUser(userRequest);}
+
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("update")
-    public void updateUser( @RequestBody UserRequest userRequest){
-        userService.updateUser(userRequest);
+    public UserApp updateUser( @RequestBody UserRequest userRequest){
+       return userService.updateUser(userRequest);
     }
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("delete/{id}")

@@ -22,11 +22,7 @@ public class Comment implements Serializable {
     private String DescriptionCommentaire;
 
     @ManyToOne
-<<<<<<< HEAD
-    private User userComment;
-=======
     private UserApp userAppComment;
->>>>>>> sami
     @JsonIgnore
     @ManyToOne
     private Publication commPub;

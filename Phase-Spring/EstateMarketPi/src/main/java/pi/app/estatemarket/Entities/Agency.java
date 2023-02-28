@@ -1,7 +1,7 @@
 package pi.app.estatemarket.Entities;
+import pi.app.estatemarket.Entities.UserApp;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -21,8 +21,6 @@ public class Agency implements Serializable {
     private String AgencyDescription;
     private String AgencyEmail;
     private int AgencyPhone;
-
-
     @ManyToOne
     private UserApp userAppAgency;
 }
