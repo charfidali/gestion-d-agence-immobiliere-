@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pi.app.estatemarket.Entities.User;
+import pi.app.estatemarket.Entities.UserApp;
 import pi.app.estatemarket.Services.IUserService;
 import pi.app.estatemarket.dto.UserDTO;
 import pi.app.estatemarket.dto.UserRequest;
@@ -25,7 +25,7 @@ public class UserController {
     }
     @PostMapping("add")
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody UserRequest userRequest){
+    public UserApp createUser(@RequestBody UserRequest userRequest){
         return userService.createUser(userRequest);}
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("update")

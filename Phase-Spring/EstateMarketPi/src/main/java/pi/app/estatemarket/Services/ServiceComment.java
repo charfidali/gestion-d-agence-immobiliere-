@@ -6,12 +6,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Entities.Publication;
-import pi.app.estatemarket.Entities.User;
+import pi.app.estatemarket.Entities.UserApp;
 import pi.app.estatemarket.Repository.CommentRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.CommentDTO;
-import pi.app.estatemarket.dto.PublicationDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,10 +68,10 @@ public class ServiceComment implements IServiceComment{
 
     @Override
     public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication) {
-        User user = userRepository.findById(userID).orElse(null);
+        UserApp userApp = userRepository.findById(userID).orElse(null);
         Publication publication = publicationRepository.findById(IdPublication).orElse(null);
         comment.setCommPub(publication);
-        comment.setUserComment(user);
+        comment.setUserAppComment(userApp);
         commentRepository.save(comment);
 
     }

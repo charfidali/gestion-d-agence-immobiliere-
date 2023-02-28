@@ -6,10 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pi.app.estatemarket.Entities.Role;
-import pi.app.estatemarket.Entities.User;
+import pi.app.estatemarket.Entities.UserApp;
 import pi.app.estatemarket.Repository.RoleRepository;
 import pi.app.estatemarket.Repository.UserRepository;
-import pi.app.estatemarket.dto.RoleDTO;
 import pi.app.estatemarket.dto.UserDTO;
 import pi.app.estatemarket.dto.UserRequest;
 
@@ -30,31 +29,31 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users.stream()
+        List<UserApp> userApps = userRepository.findAll();
+        return userApps.stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public User createUser(UserRequest userRequest) {
+    public UserApp createUser(UserRequest userRequest) {
         Role role=roleRepository.findById(userRequest.getRole_id()).orElse(null);
         //log.info("{}",userRequest.getRole_id());
         //log.info("roleid from role{}",role.getRoleId());
-        //User user= new User();
-        User user=modelMapper.map(userRequest, User.class);
-        user.setRole(role);
-        return userRepository.save(user);
+        //UserApp userApp= new UserApp();
+        UserApp userApp =modelMapper.map(userRequest, UserApp.class);
+        userApp.setRole(role);
+        return userRepository.save(userApp);
     }
 
     @Override
-    public User updateUser( UserRequest userRequest) {
+    public UserApp updateUser(UserRequest userRequest) {
         Role role=roleRepository.findById(userRequest.getRole_id()).orElse(null);
-        User user=userRepository.findById(userRequest.getUserID()).orElse(null);
-        user=modelMapper.map(userRequest, User.class);
+        UserApp userApp =userRepository.findById(userRequest.getUserID()).orElse(null);
+        userApp =modelMapper.map(userRequest, UserApp.class);
         if(role!=null)
-            user.setRole(role);
-        return userRepository.save(user);
+            userApp.setRole(role);
+        return userRepository.save(userApp);
     }
 
     @Override
@@ -64,7 +63,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserDTO getUserById(long id) {
-        User user=userRepository.findById(id).orElse(null);
-        return modelMapper.map(user, UserDTO.class);
+        UserApp userApp =userRepository.findById(id).orElse(null);
+        return modelMapper.map(userApp, UserDTO.class);
     }
 }

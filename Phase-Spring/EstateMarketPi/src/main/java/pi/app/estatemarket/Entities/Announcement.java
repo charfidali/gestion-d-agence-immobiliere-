@@ -31,7 +31,7 @@ public class Announcement implements Serializable {
     private Date DisponibiliteAnn;
 
     @ManyToOne
-    private User userAnnouncement;
+    private UserApp userAppAnnouncement;
 
     @OneToMany(mappedBy = "announcementApp")
     private Set<Appointment> appointments;

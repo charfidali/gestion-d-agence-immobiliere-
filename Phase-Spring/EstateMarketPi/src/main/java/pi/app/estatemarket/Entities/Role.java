@@ -30,9 +30,9 @@ public class Role implements Serializable {
     @Column(name = "permissions")
     private String permissions;
     @OneToMany(mappedBy = "role")
-    private Set<User> listOfUsers;
+    private Set<UserApp> listOfUserApps;
     @JsonManagedReference
-    public Set<User> getListOfUsers() {
-        return listOfUsers;
+    public Set<UserApp> getListOfUserApps() {
+        return listOfUserApps;
     }
 }

@@ -2,7 +2,6 @@ package pi.app.estatemarket.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User implements Serializable {
+public class UserApp implements Serializable {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "user_id")
@@ -51,26 +50,26 @@ public class User implements Serializable {
         @JoinColumn(name = "role_id")
         private Role role;
         @JsonIgnore
-        @OneToMany (mappedBy = "userPub")
+        @OneToMany (mappedBy = "userAppPub")
         private Set<Publication> publications;
         @JsonIgnore
-        @OneToMany(mappedBy = "userMessage")
+        @OneToMany(mappedBy = "userAppMessage")
         private Set<Message> messagess;
         @JsonIgnore
-        @OneToMany(mappedBy = "userComment")
+        @OneToMany(mappedBy = "userAppComment")
         private Set<Comment> comments;
         @JsonIgnore
-        @OneToMany(mappedBy = "userAgency")
+        @OneToMany(mappedBy = "userAppAgency")
         private Set<Agency> agencies;
         @JsonIgnore
-        @OneToMany(mappedBy = "userContract")
+        @OneToMany(mappedBy = "userAppContract")
         private Set<Contract> contracts;
         @JsonIgnore
-        @OneToMany(mappedBy = "userAnnouncement")
+        @OneToMany(mappedBy = "userAppAnnouncement")
         private Set<Announcement> announcements;
         @JsonIgnore
         @ManyToMany
-        private Set<User> appointments;
+        private Set<UserApp> appointments;
 
         @JsonBackReference
         public Role getRole() {

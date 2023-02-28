@@ -24,5 +24,5 @@ public class Agency implements Serializable {
 
 
     @ManyToOne
-    private User userAgency;
+    private UserApp userAppAgency;
 }
