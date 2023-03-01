@@ -73,16 +73,17 @@ public class UserApp implements Serializable {
         @ManyToMany
         private Set<UserApp> appointments;
 
-        @JsonBackReference
-        public Role getRole() {
-                return role;
-        }
 
-        //--------
+
 
         @OneToMany(mappedBy = "userL")
         private List<Likee> likeList;
 
 
+
+        @JsonBackReference
+        public Role getRole() {
+                return role;
+        }
 }
 

@@ -117,4 +117,3 @@ public class ServicePublication implements IServicePublication {
         return publicationRepository.findAllByOrderByCommentsPubAsc();
     }*/
 }
-

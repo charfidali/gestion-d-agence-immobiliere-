@@ -7,10 +7,14 @@ import org.springframework.stereotype.Service;
 import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Entities.UserApp;
+
+
 import pi.app.estatemarket.Repository.CommentRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.CommentDTO;
+
+//import pi.app.estatemarket.dto.PublicationDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,6 +80,13 @@ public class ServiceComment implements IServiceComment {
         return description;
     }
 }
+
+
+
+
+
+
+
     //--------------------------------------------
 /*
     @Override
@@ -105,4 +116,5 @@ public class ServiceComment implements IServiceComment {
     Comments() {
         return commentRepository.findAll();
     } */
+
 

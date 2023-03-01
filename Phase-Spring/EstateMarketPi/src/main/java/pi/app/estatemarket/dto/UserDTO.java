@@ -23,4 +23,5 @@ public class UserDTO {
     private Date dateOfBirth;
     private String password;
     private GenderType gender;
+    private long role_id;
 }

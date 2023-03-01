@@ -25,10 +25,11 @@ public class Publication implements Serializable {
     private String DescriptionPublication;
 
     private int nombreLike=0;
-
-    @JsonIgnore
+@JsonIgnore
     @ManyToOne
     private UserApp userAppPub;
+
+
 
     //----------
     @JsonIgnore
