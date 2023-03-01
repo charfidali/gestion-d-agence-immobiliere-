@@ -57,7 +57,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserApp createUser(UserRequest userRequest) {
         Role role=roleRepository.findById(userRequest.getRole_id()).orElse(null);
         //log.info("{}",userRequest.getRole_id());
-        //log.info("roleid from role{}",role.getRoleId());
+        log.info("roleid from role{}",role.getRoleId());
         //User user= new User();
         UserApp user=modelMapper.map(userRequest, UserApp.class);
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
