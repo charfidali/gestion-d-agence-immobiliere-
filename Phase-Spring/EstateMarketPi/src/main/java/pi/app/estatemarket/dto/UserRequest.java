@@ -24,4 +24,5 @@ public class UserRequest {
     private String password;
     private GenderType gender;
     private long role_id;
+    private String role_name;
 }

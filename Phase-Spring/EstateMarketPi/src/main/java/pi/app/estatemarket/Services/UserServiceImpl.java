@@ -28,6 +28,7 @@ public class UserServiceImpl implements IUserService {
     private final UserRepository userRepository;
     @Autowired
     private final RoleRepository roleRepository;
+
     private final ModelMapper modelMapper;
 
     @Override
