@@ -32,6 +32,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    private static final String[] AUTH_WHITELIST = {
+            // -- Swagger UI v2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/authenticate",
+            "/register",
+
+            "/RetrieveAllPublications",
+            "/UpdatePublication/**",
+            "/RetrievePublication/**",
+            "/DeletePublication/**",
+            "/ajouterEtAffecterPublicationAuser/**",
+            "Afficher le nombre de commentaire par publication/**",
+            "/Afficher tous les commentaire d'une publication/**",
+            "/addlike/**",
+
+            "/RetrieveAllComments",
+            "/UpdateComment/**",
+            "/retrieveComment/**",
+            "/DeleteComment/**",
+            "/ajouterEtAffecterCommentaireAUserEtCommentaire/**"
+
+
+            // other public endpoints of your API may be appended to this array
+    };
+
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
@@ -49,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/api/role/**","/api/user/**").hasRole("ADMIN")
                 .antMatchers("/api/user").hasRole("USER")
-                .antMatchers("/authenticate", "/register").permitAll().anyRequest().authenticated()
+                .antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
                 and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 and().addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
