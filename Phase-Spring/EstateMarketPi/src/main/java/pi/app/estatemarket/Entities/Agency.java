@@ -22,7 +22,6 @@ public class Agency implements Serializable {
     private String AgencyEmail;
     private int AgencyPhone;
 
-
     @ManyToOne
-    private User userAgency;
+    private UserApp userAppAgency;
 }

@@ -1,9 +1,7 @@
 package pi.app.estatemarket.Services;
 
-import org.springframework.http.ResponseEntity;
 import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
-import pi.app.estatemarket.Entities.User;
 
 import java.util.List;
 
@@ -24,19 +22,15 @@ public interface IServicePublication {
     public Long countCommentsByPublicationId(Integer idPublication);
 
     public Publication getPublicationWithComments(int id);
-    public List<Publication> getMostCommentedPublications();
-
-
-
 
 
 
     //-----------------------------------------
 
-
     void addLikeToPost(Likee likee, Integer idPost, Long idUser) throws Exception;
 
 
+    //  public List<Publication> getMostCommentedPublications();
     // public void AffectUserToPub (Long userID, int IdPublication);
     //    public Publication addPublication (Publication pb);
 }

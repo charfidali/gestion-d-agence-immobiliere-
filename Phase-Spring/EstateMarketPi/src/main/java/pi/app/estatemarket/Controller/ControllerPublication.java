@@ -1,18 +1,13 @@
 package pi.app.estatemarket.Controller;
 
 import lombok.AllArgsConstructor;
-import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
-import pi.app.estatemarket.Entities.User;
-import pi.app.estatemarket.Repository.PublicationRepository;
-import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.Services.IServicePublication;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @AllArgsConstructor
@@ -58,10 +53,7 @@ public class ControllerPublication {
         return iServicePublication.getPublicationWithComments(id);
     }
 
-    @GetMapping("/Afficher toutes les publications avec les commentaires décroissants")
-    public List<Publication> getPopularPublications() {
-        return iServicePublication.getMostCommentedPublications();
-    }
+
 
 //----------
 
@@ -75,4 +67,11 @@ public class ControllerPublication {
         }
     }
 
+    //--------------------------
+
+
+    /*    @GetMapping("/Afficher toutes les publications avec les commentaires décroissants")
+    public List<Publication> getPopularPublications() {
+        return iServicePublication.getMostCommentedPublications();
+    }*/
 }

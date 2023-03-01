@@ -23,6 +23,6 @@ public class Contract implements Serializable {
     private String TypeContract;
 
     @ManyToOne
-    private User userContract;
+    private UserApp userAppContract;
 
 }

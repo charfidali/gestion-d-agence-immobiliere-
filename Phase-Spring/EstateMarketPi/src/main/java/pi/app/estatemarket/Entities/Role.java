@@ -1,5 +1,6 @@
 package pi.app.estatemarket.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,7 +30,11 @@ public class Role implements Serializable {
     @Column(name = "permissions")
     private String permissions;
     @OneToMany(mappedBy = "role")
-    private Set<User> listOfUsers;
 
+    private Set<UserApp> listOfUsers;
+    @JsonManagedReference
+    public Set<UserApp> getListOfUsers() {
+        return listOfUsers;
 
+    }
 }

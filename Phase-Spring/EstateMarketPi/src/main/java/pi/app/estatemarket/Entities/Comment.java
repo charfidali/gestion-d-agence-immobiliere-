@@ -22,7 +22,7 @@ public class Comment implements Serializable {
     private Date DateComment;
     private String DescriptionCommentaire;
 
-    // ...
+/*    // ...
 
     public String getFilteredDescriptionCommentaire() {
         String filteredDescription = this.DescriptionCommentaire;
@@ -31,10 +31,12 @@ public class Comment implements Serializable {
         return filteredDescription;
     }
 
-    // ...
+    // ...*/
 
     @ManyToOne
-    private User userComment;
+    @JsonIgnore
+    private UserApp userAppComment;
+
     @JsonIgnore
     @ManyToOne
     private Publication commPub;

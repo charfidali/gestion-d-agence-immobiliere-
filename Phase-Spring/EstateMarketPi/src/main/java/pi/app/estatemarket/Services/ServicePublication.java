@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
-import pi.app.estatemarket.Entities.User;
+import pi.app.estatemarket.Entities.UserApp;
 import pi.app.estatemarket.Repository.LikeRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
@@ -68,8 +68,8 @@ public class ServicePublication implements IServicePublication {
     @Override
     public void ajouterEtAffecterPublicationAuser(Publication publication, Long userID) {
 
-        User user = userRepository.findById(userID).orElse(null);
-        publication.setUserPub(user);
+        UserApp user = userRepository.findById(userID).orElse(null);
+        publication.setUserAppPub(user);
         publicationRepository.save(publication);
     }
 
@@ -85,16 +85,12 @@ public class ServicePublication implements IServicePublication {
     }
 
 
-    @Override
-    public List<Publication> getMostCommentedPublications() {
-        return publicationRepository.findAllByOrderByCommentsPubDesc();
-    }
 
     //-----------------------------------------
     @Override
     public void addLikeToPost(Likee likee, Integer idPost, Long idUser) throws Exception {
         Publication post = publicationRepository.findById(idPost).orElse(null);
-        User user = userRepository.findById(idUser).orElse(null);
+        UserApp user = userRepository.findById(idUser).orElse(null);
         if (post == null) {
             throw new Exception("Publication with ID " + idPost + " does not exist.");
         }
@@ -111,5 +107,14 @@ public class ServicePublication implements IServicePublication {
         like.setUserL(user);
         likeRepository.save(like);
     }
+
+
+
+    //----------------
+    /*
+    @Override
+    public List<Publication> getMostCommentedPublications() {
+        return publicationRepository.findAllByOrderByCommentsPubAsc();
+    }*/
 }
 

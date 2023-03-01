@@ -21,16 +21,10 @@ public class ControllerComment {
         return iServiceComment.getAllComments();
     }
 
-    @PutMapping("/UpdateComment")
-    Comment updateComment (@RequestBody Comment comm){
+    @PutMapping("/UpdateComment/{IdComment}")
+    Comment updateComment (@PathVariable int IdComment,@RequestBody Comment comm){
 
-        return iServiceComment.updateComment(comm);
-    }
-
-    @PostMapping("/AddComment")
-    Comment addComment (@RequestBody Comment comm){
-
-        return iServiceComment.addComment(comm);
+        return iServiceComment.updateComment(IdComment, comm);
     }
 
     @GetMapping("/retrieveComment/{IdComment}")
@@ -45,18 +39,27 @@ public class ControllerComment {
         iServiceComment.removeComment(IdComment);
     }
 
-    @PostMapping("/AffectPubToComment/{IdComment}/{IdPublication}")
-    public void AffectPubToComment(@PathVariable int IdComment,@PathVariable int IdPublication){
-        iServiceComment.AffectPubToComment(IdComment, IdPublication);
-    }
-
     @PostMapping("/ajouterEtAffecterCommentaireAUserEtCommentaire/{userID}/{IdPublication}")
     public void ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication){
         iServiceComment.ajouterEtAffecterCommentaireAUserEtCommentaire(comment, userID, IdPublication);
     }
+    //-------------------------
 
+/*    @PostMapping("/AddComment")
+    Comment addComment (@RequestBody Comment comm){
+
+        return iServiceComment.addComment(comm);
+    }
+    */
+    /*    @PostMapping("/AffectPubToComment/{IdComment}/{IdPublication}")
+    public void AffectPubToComment(@PathVariable int IdComment,@PathVariable int IdPublication){
+        iServiceComment.AffectPubToComment(IdComment, IdPublication);
+    }*/
+
+
+/*
     @GetMapping("/filtered")
     public List<Comment> getAllFilteredComments() {
         return iServiceComment.getAllFilteredComments();
-    }
+    }*/
 }

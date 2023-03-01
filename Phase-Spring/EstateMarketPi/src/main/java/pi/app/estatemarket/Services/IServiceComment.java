@@ -8,20 +8,32 @@ import pi.app.estatemarket.dto.PublicationDTO;
 import java.util.List;
 
 public interface IServiceComment {
-    //List<Comment> retrieveAllComments();
-
     List<CommentDTO> getAllComments();
-    Comment updateComment (Comment comm);
-
-    Comment addComment (Comment comm);
-
     Comment retrieveComment (Integer IdComment);
-
+    Comment updateComment (int IdComment, Comment comm);
     void removeComment (Integer IdComment);
+    public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication ) ;
 
-    public void AffectPubToComment(int IdComment, int IdPublication);
 
-    public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication );
+    //-----------------
 
-    List<Comment> getAllFilteredComments();
+
+
+
+
+
+
+
+
+
+
+
+
+    //public void AffectPubToComment(int IdComment, int IdPublication);
+    //List<Comment> retrieveAllComments();
+    //Comment addComment (Comment comm);
+
+
+
+  //  List<Comment> getAllFilteredComments();
 }

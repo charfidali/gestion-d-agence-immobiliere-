@@ -1,20 +1,24 @@
 package pi.app.estatemarket.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
-@Entity(name="User")
+@Entity(name="UserApp")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User implements Serializable {
+public class UserApp implements Serializable {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "user_id")
@@ -44,34 +48,37 @@ public class User implements Serializable {
         @Enumerated(EnumType.STRING)
         @Column(name = "gender")
         private GenderType gender;
-        @JsonIgnore
         @ManyToOne
+        @JoinColumn(name = "role_id")
         private Role role;
         @JsonIgnore
-        @OneToMany (mappedBy = "userPub")
+        @OneToMany (mappedBy = "userAppPub")
         private Set<Publication> publications;
         @JsonIgnore
-        @OneToMany(mappedBy = "userMessage")
+        @OneToMany(mappedBy = "userAppMessage")
         private Set<Message> messagess;
         @JsonIgnore
-        @OneToMany(mappedBy = "userComment")
+        @OneToMany(mappedBy = "userAppComment")
         private Set<Comment> comments;
         @JsonIgnore
-        @OneToMany(mappedBy = "userAgency")
+        @OneToMany(mappedBy = "userAppAgency")
         private Set<Agency> agencies;
         @JsonIgnore
-        @OneToMany(mappedBy = "userContract")
+        @OneToMany(mappedBy = "userAppContract")
         private Set<Contract> contracts;
         @JsonIgnore
-        @OneToMany(mappedBy = "userAnnouncement")
+        @OneToMany(mappedBy = "userAppAnnouncement")
         private Set<Announcement> announcements;
         @JsonIgnore
         @ManyToMany
-        private Set<User> appointments;
+        private Set<UserApp> appointments;
 
+        @JsonBackReference
+        public Role getRole() {
+                return role;
+        }
 
         //--------
-
 
         @OneToMany(mappedBy = "userL")
         private List<Likee> likeList;
