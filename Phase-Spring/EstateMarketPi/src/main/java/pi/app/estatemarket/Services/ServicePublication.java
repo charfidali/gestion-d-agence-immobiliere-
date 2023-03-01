@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Entities.User;
-import pi.app.estatemarket.Repository.LikeeRepository;
+import pi.app.estatemarket.Repository.LikeRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 
@@ -21,7 +21,9 @@ public class ServicePublication implements IServicePublication {
     private final ModelMapper modelMapper;
     PublicationRepository publicationRepository;
     UserRepository userRepository;
-    LikeeRepository likeeRepository;
+
+    LikeRepository likeRepository;
+
 
    /* @Override
     public List<Publication> retrieveAllPublications() {
@@ -39,7 +41,7 @@ public class ServicePublication implements IServicePublication {
     }*/
 
     @Override
-    public Publication updatePublication(int ID, Publication publication ) {
+    public Publication updatePublication(int ID, Publication publication) {
         return publicationRepository.findById(ID)
                 .map(publication1 -> {
                     publication1.setDatePublication(publication.getDatePublication());
@@ -88,22 +90,26 @@ public class ServicePublication implements IServicePublication {
         return publicationRepository.findAllByOrderByCommentsPubDesc();
     }
 
+    //-----------------------------------------
     @Override
-    public List<Publication> getPublicationsOrderByLikes() {
-        return publicationRepository.findByOrderByLikePubDesc();
+    public void addLikeToPost(Likee likee, Integer idPost, Long idUser) throws Exception {
+        Publication post = publicationRepository.findById(idPost).orElse(null);
+        User user = userRepository.findById(idUser).orElse(null);
+        if (post == null) {
+            throw new Exception("Publication with ID " + idPost + " does not exist.");
+        }
+        if (user == null) {
+            throw new Exception("User with ID " + idUser + " does not exist.");
+        }
+        if (likeRepository.existsByPostAndUserL(post, user)) {
+            throw new Exception("User " + idUser + " has already liked the post " + idPost);
+        }
+        post.setNombreLike(post.getNombreLike() + 1);
+        publicationRepository.save(post);
+        Likee like = new Likee();
+        like.setPost(post);
+        like.setUserL(user);
+        likeRepository.save(like);
     }
-
-    @Override
-    public void addLikeToPublication(int IdPublication, long userID) {
-        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
-        User user = userRepository.findById(userID).orElse(null);
-        Likee likee = new Likee();
-        likee.setPubL(publication);
-        likee.setUserL(user);
-        publication.setLikePub(IdPublication);
-        likeeRepository.save(likee);
-        publicationRepository.save(publication);
-    }
-
-
 }
+

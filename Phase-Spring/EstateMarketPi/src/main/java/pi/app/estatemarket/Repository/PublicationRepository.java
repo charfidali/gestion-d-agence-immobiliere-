@@ -5,9 +5,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pi.app.estatemarket.Entities.Publication;
+import pi.app.estatemarket.Entities.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface PublicationRepository extends JpaRepository<Publication, Integer> {
@@ -17,7 +19,6 @@ public interface PublicationRepository extends JpaRepository<Publication, Intege
     Long countCommentsByPublicationId(@Param("idPublication") Integer idPublication);
 
 
-
     //afficher les publication avec tous les commentaires
     @Query("SELECT p FROM publication p LEFT JOIN FETCH p.commentsPub WHERE p.IdPublication = :id")
     Optional<Publication> findPublicationWithCommentsById(@Param("id") int id);
@@ -25,6 +26,5 @@ public interface PublicationRepository extends JpaRepository<Publication, Intege
     //pub les plus commentées
     List<Publication> findAllByOrderByCommentsPubDesc();
 
-    //Récupérer les publications triées par ordre décroissant du nombre de likes
-    List<Publication> findByOrderByLikePubDesc();
+//---------------------
 }

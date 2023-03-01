@@ -1,6 +1,9 @@
 package pi.app.estatemarket.Services;
 
+import org.springframework.http.ResponseEntity;
+import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
+import pi.app.estatemarket.Entities.User;
 
 import java.util.List;
 
@@ -24,11 +27,16 @@ public interface IServicePublication {
     public List<Publication> getMostCommentedPublications();
 
 
-    List<Publication> getPublicationsOrderByLikes();
-
-    void addLikeToPublication(int IdPublication, long userID);
 
 
-   // public void AffectUserToPub (Long userID, int IdPublication);
+
+
+    //-----------------------------------------
+
+
+    void addLikeToPost(Likee likee, Integer idPost, Long idUser) throws Exception;
+
+
+    // public void AffectUserToPub (Long userID, int IdPublication);
     //    public Publication addPublication (Publication pb);
 }

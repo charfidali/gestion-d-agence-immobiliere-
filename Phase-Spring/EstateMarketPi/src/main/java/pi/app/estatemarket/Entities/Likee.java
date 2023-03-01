@@ -1,9 +1,12 @@
 package pi.app.estatemarket.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import pi.app.estatemarket.Repository.PublicationRepository;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter
@@ -13,12 +16,12 @@ import java.io.Serializable;
 public class Likee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idLike;
-
+    private int IdLike;
 
     @ManyToOne
+    @JsonIgnore
     private User userL;
     @ManyToOne
-    private Publication pubL;
+    @JsonIgnore
+    private Publication post;
 }
-

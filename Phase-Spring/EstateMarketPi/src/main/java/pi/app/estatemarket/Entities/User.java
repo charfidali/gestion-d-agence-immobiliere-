@@ -5,9 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity(name="User")
 @Getter
@@ -72,13 +70,12 @@ public class User implements Serializable {
         private Set<User> appointments;
 
 
-        @OneToMany (mappedBy = "userL")
-        @JsonIgnore
-        private Set<Likee> likees;
+        //--------
 
-        @OneToMany(mappedBy = "userDL")
-        @JsonIgnore
-        private Set<Dislike> dislikes;
+
+        @OneToMany(mappedBy = "userL")
+        private List<Likee> likeList;
+
 
 }
 
