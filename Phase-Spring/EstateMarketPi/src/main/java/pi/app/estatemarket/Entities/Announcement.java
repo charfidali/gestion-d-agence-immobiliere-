@@ -22,7 +22,7 @@ public class Announcement implements Serializable {
     @Enumerated(EnumType.STRING)
     private LeaseType leaseType;
 
-    private String AreaAnn;
+    private String areaAnn;
     private float PriceAnn;
     private String DescriptionAnn;
     private String AddressAnn;
