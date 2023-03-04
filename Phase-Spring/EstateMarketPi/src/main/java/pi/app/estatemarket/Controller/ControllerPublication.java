@@ -39,9 +39,17 @@ public class ControllerPublication {
     }
 
     @PostMapping("/ajouterEtAffecterPublicationAuser/{userID}")
-    public void ajouterEtAffecterPublicationAuser(@RequestBody Publication publication, @PathVariable Long userID) {
-        iServicePublication.ajouterEtAffecterPublicationAuser(publication, userID);
+    public ResponseEntity<String> ajouterEtAffecterPublicationAuser(@RequestBody Publication publication, @PathVariable Long userID) throws Exception{
+        try {
+
+         iServicePublication.ajouterEtAffecterPublicationAuser(publication, userID);
+        return ResponseEntity.ok("Publication added by user Id"+ userID);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding publication: " + e.getMessage());
+        }
     }
+
 
     @GetMapping("Afficher le nombre de commentaire par publication/{idPublication}")
     public Long countCommentsByPublicationId(@PathVariable Integer idPublication) {

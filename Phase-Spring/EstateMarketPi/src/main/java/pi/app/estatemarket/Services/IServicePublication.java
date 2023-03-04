@@ -17,12 +17,11 @@ public interface IServicePublication {
 
     void removePublication (Integer IdPublication);
 
-    public void ajouterEtAffecterPublicationAuser(Publication publication, Long userID);
+    public Publication ajouterEtAffecterPublicationAuser(Publication publication, Long userID) throws Exception;
 
     public Long countCommentsByPublicationId(Integer idPublication);
 
     public Publication getPublicationWithComments(int id);
-
 
 
     //-----------------------------------------
@@ -30,7 +29,4 @@ public interface IServicePublication {
     void addLikeToPost(Likee likee, Integer idPost, Long idUser) throws Exception;
 
 
-    //  public List<Publication> getMostCommentedPublications();
-    // public void AffectUserToPub (Long userID, int IdPublication);
-    //    public Publication addPublication (Publication pb);
 }
