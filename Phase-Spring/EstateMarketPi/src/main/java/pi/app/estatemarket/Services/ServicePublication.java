@@ -49,7 +49,7 @@ public class ServicePublication implements IServicePublication {
                     publication1.setDescriptionPublication(publication.getDescriptionPublication());
                     publication1.setTitrePub(publication.getTitrePub());
                     return publicationRepository.save(publication1);
-                }).orElseThrow(() -> new RuntimeException("Publication non trouvé !"));
+                }).orElseThrow(() -> new RuntimeException("Publication not found !"));
     }
 
     @Override
@@ -66,14 +66,14 @@ public class ServicePublication implements IServicePublication {
     }
 
     @Override
-    public Publication ajouterEtAffecterPublicationAuser(Publication publication, Long userID) throws Exception{
+    public Publication addAndAffectPublicationTouser(Publication publication, Long userID) throws Exception{
 
         UserApp user = userRepository.findById(userID).orElse(null);
         publication.setUserAppPub(user);
         for (Publication existingPublication : getAllPublications()) {
             double similarity = new JaroWinklerSimilarity().apply(existingPublication.getDescriptionPublication(), publication.getDescriptionPublication());
             if (similarity > 0.8) { // Set a threshold for similarity
-                throw new Exception("Une publication similaire existe déjà.");
+                throw new Exception("A similar publication already exists.");
             }
         }
         return publicationRepository.save(publication);

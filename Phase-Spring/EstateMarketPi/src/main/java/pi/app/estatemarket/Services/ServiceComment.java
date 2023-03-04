@@ -16,8 +16,10 @@ import pi.app.estatemarket.dto.CommentDTO;
 
 //import pi.app.estatemarket.dto.PublicationDTO;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +46,7 @@ public class ServiceComment implements IServiceComment {
                 .map(comment1 -> {
                     comment1.setDescriptionCommentaire(comm.getDescriptionCommentaire());
                     return commentRepository.save(comment1);
-                }).orElseThrow(() -> new RuntimeException("Commentaire non trouvé !"));
+                }).orElseThrow(() -> new RuntimeException("Comment not found !"));
 }
     @Override
     public Comment retrieveComment(Integer IdComment) {
@@ -78,6 +80,33 @@ public class ServiceComment implements IServiceComment {
         }
 
         return description;
+    }
+
+
+    @Override
+
+    public Comment reportComment(int idComment, long userId) throws Exception {
+        Optional<Comment> commentOptional = commentRepository.findById(idComment);
+        if (!commentOptional.isPresent()) {
+            throw new Exception("Comment with ID " + idComment + " does not exist.");
+        }
+
+        if (!userRepository.existsById(userId)) {
+            throw new Exception("User with ID " + userId + " does not exist.");
+        }
+
+        Comment comment = commentOptional.get();
+        if (comment.getUserAppComment().getUserID() == userId) {
+            throw new Exception("You cannot report your own comment");
+        }
+
+        if (comment.getReportedBy().contains(userId)) {
+            throw new Exception("You have already reported this comment");
+        }
+
+        comment.setSignalCount(comment.getSignalCount() + 1);
+        comment.getReportedBy().add(userId);
+        return commentRepository.save(comment);
     }
 }
 

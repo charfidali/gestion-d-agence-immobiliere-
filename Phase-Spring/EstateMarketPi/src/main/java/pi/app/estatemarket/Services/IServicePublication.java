@@ -17,7 +17,7 @@ public interface IServicePublication {
 
     void removePublication (Integer IdPublication);
 
-    public Publication ajouterEtAffecterPublicationAuser(Publication publication, Long userID) throws Exception;
+    public Publication addAndAffectPublicationTouser(Publication publication, Long userID) throws Exception;
 
     public Long countCommentsByPublicationId(Integer idPublication);
 

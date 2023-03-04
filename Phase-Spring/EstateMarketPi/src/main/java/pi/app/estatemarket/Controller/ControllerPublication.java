@@ -38,11 +38,11 @@ public class ControllerPublication {
         iServicePublication.removePublication(IdPublication);
     }
 
-    @PostMapping("/ajouterEtAffecterPublicationAuser/{userID}")
+    @PostMapping("/addAndAffectPublicationTouser/{userID}")
     public ResponseEntity<String> ajouterEtAffecterPublicationAuser(@RequestBody Publication publication, @PathVariable Long userID) throws Exception{
         try {
 
-         iServicePublication.ajouterEtAffecterPublicationAuser(publication, userID);
+         iServicePublication.addAndAffectPublicationTouser(publication, userID);
         return ResponseEntity.ok("Publication added by user Id"+ userID);
 
         } catch (Exception e) {
@@ -51,12 +51,12 @@ public class ControllerPublication {
     }
 
 
-    @GetMapping("Afficher le nombre de commentaire par publication/{idPublication}")
+    @GetMapping("countCommentsByPublication/{idPublication}")
     public Long countCommentsByPublicationId(@PathVariable Integer idPublication) {
         return iServicePublication.countCommentsByPublicationId(idPublication);
     }
 
-    @GetMapping("/Afficher tous les commentaire d'une publication/{id}")
+    @GetMapping("/getPublicationWithComments/{id}")
     public Publication getPublicationWithComments(@PathVariable int id) {
         return iServicePublication.getPublicationWithComments(id);
     }

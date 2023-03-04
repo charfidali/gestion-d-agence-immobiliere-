@@ -1,7 +1,10 @@
 package pi.app.estatemarket.Controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Services.IServiceComment;
 import pi.app.estatemarket.dto.CommentDTO;
@@ -15,35 +18,51 @@ import java.util.List;
 public class ControllerComment {
 
     IServiceComment iServiceComment;
+
     @GetMapping("/RetrieveAllComments")
-    List<CommentDTO> retrieveAllComments(){
+    List<CommentDTO> retrieveAllComments() {
 
         return iServiceComment.getAllComments();
     }
 
     @PutMapping("/UpdateComment/{IdComment}")
-    Comment updateComment (@PathVariable int IdComment,@RequestBody Comment comm){
+    Comment updateComment(@PathVariable int IdComment, @RequestBody Comment comm) {
 
         return iServiceComment.updateComment(IdComment, comm);
     }
 
     @GetMapping("/retrieveComment/{IdComment}")
-    Comment retrieveComment (Integer IdComment){
+    Comment retrieveComment(Integer IdComment) {
 
         return iServiceComment.retrieveComment(IdComment);
     }
 
     @DeleteMapping("/DeleteComment/{IdComment}")
-    void removeComment (Integer IdComment){
+    void removeComment(Integer IdComment) {
 
         iServiceComment.removeComment(IdComment);
     }
 
     @PostMapping("/ajouterEtAffecterCommentaireAUserEtCommentaire/{userID}/{IdPublication}")
-    public void ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication){
+    public void ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication) {
         iServiceComment.ajouterEtAffecterCommentaireAUserEtCommentaire(comment, userID, IdPublication);
     }
     //-------------------------
+
+
+    @PutMapping("/reportComment/{idComment}/{userId}")
+    public ResponseEntity<String> reportComment(@PathVariable int idComment, @PathVariable long userId) throws Exception {
+        try {
+            iServiceComment.reportComment(idComment, userId);
+            return ResponseEntity.ok("Report added to comment with Id " + idComment + " by user with Id " + userId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding Report: " + e.getMessage());
+        }
+    }
+}
+
+
+
 
 /*    @PostMapping("/AddComment")
     Comment addComment (@RequestBody Comment comm){
@@ -62,4 +81,4 @@ public class ControllerComment {
     public List<Comment> getAllFilteredComments() {
         return iServiceComment.getAllFilteredComments();
     }*/
-}
+

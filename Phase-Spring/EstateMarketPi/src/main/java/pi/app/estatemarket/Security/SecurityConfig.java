@@ -60,7 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/UpdateComment/**",
             "/retrieveComment/**",
             "/DeleteComment/**",
-            "/ajouterEtAffecterCommentaireAUserEtCommentaire/**"
+            "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
+            "/reportComment/**"
 
 
             // other public endpoints of your API may be appended to this array

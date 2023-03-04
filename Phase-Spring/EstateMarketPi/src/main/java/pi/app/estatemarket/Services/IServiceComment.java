@@ -15,6 +15,10 @@ public interface IServiceComment {
     public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication ) ;
 
 
+
+    Comment reportComment(int idComment, long userId) throws Exception;
+
+
     //-----------------
 
 
