@@ -6,6 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import org.apache.commons.text.similarity.JaroWinklerSimilarity;
+
 
 @Entity(name = "publication")
 @Getter
@@ -24,11 +26,10 @@ public class Publication implements Serializable {
     private Date DatePublication;
     private String DescriptionPublication;
 
-    private int nombreLike=0;
-@JsonIgnore
+    private int nombreLike = 0;
+    @JsonIgnore
     @ManyToOne
     private UserApp userAppPub;
-
 
 
     //----------
@@ -39,7 +40,7 @@ public class Publication implements Serializable {
 
     //@JsonIgnore //au cas où lezemesh les commentaires yokhrjou maa les listes de pubs
     @OneToMany(mappedBy = "commPub")
-    private Set<Comment>commentsPub;
+    private Set<Comment> commentsPub;
 
     @PrePersist
     protected void onCreate() {
@@ -52,8 +53,6 @@ public class Publication implements Serializable {
     public void incrementViews() {
         this.views++;
     }
-
-
 
     //-------
 

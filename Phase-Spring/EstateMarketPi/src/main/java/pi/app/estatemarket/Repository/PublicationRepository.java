@@ -29,4 +29,14 @@ public interface PublicationRepository extends JpaRepository<Publication, Intege
     //List<Publication> findAllByOrderByCommentsPubAsc();
 
 //---------------------
+
+/*    public default Publication findBySimilarContent(Publication publication) {
+        List<Publication> publications = findAll();
+        for (Publication p : publications) {
+            if (p.hasSimilarContent(publication)) {
+                return p;
+            }
+        }
+        return null;
+    }*/
 }
