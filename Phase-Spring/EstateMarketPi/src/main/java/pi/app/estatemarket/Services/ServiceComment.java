@@ -104,10 +104,18 @@ public class ServiceComment implements IServiceComment {
             throw new Exception("You have already reported this comment");
         }
 
-        comment.setSignalCount(comment.getSignalCount() + 1);
         comment.getReportedBy().add(userId);
-        return commentRepository.save(comment);
+        comment.setSignalCount(comment.getSignalCount() + 1);
+        if (comment.getSignalCount() >= 10) {
+            commentRepository.delete(comment);
+            return null;
+        } else {
+            return commentRepository.save(comment);
+        }
     }
+
+    //------
+
 }
 
 
