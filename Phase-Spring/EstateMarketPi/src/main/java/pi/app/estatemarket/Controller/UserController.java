@@ -1,15 +1,21 @@
 package pi.app.estatemarket.Controller;
 
 import lombok.AllArgsConstructor;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pi.app.estatemarket.Entities.UserApp;
 import pi.app.estatemarket.Services.IUserService;
+import pi.app.estatemarket.Services.UserAppNotFoundException;
 import pi.app.estatemarket.dto.UserDTO;
 import pi.app.estatemarket.dto.UserRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -17,6 +23,8 @@ import java.util.List;
 @AllArgsConstructor
 @Transactional
 public class UserController {
+    @Autowired
+    private JavaMailSender mailSender;
     @Autowired
     private final IUserService userService;
     @GetMapping
@@ -44,4 +52,5 @@ public class UserController {
     public UserDTO getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
+
 }
