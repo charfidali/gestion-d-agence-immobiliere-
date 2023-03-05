@@ -24,16 +24,6 @@ public class Comment implements Serializable {
     private Date DateComment;
     private String DescriptionCommentaire;
 
-/*    // ...
-
-    public String getFilteredDescriptionCommentaire() {
-        String filteredDescription = this.DescriptionCommentaire;
-        // Replace any occurrence of bad words with asterisks (*)
-        filteredDescription = filteredDescription.replaceAll("(?i)badword1|badword2|badword3", "***");
-        return filteredDescription;
-    }
-
-    // ...*/
 
     @ManyToOne
     @JsonIgnore

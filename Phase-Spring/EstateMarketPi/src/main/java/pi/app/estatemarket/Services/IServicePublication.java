@@ -15,7 +15,7 @@ public interface IServicePublication {
 
     Publication retrievePublication (Integer IdPublication);
 
-    void removePublication (Integer IdPublication);
+    void removePublication (Integer IdPublication) throws Exception;
 
     public Publication addAndAffectPublicationTouser(Publication publication, Long userID) throws Exception;
 

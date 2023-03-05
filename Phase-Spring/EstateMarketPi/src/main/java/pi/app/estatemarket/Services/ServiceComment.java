@@ -41,7 +41,7 @@ public class ServiceComment implements IServiceComment {
     }
 
     @Override
-    public Comment updateComment(int IdComment, Comment comm) {
+    public Comment updateComment(int IdComment, Comment comm) throws Exception{
         return commentRepository.findById(IdComment)
                 .map(comment1 -> {
                     comment1.setDescriptionCommentaire(comm.getDescriptionCommentaire());
@@ -49,20 +49,28 @@ public class ServiceComment implements IServiceComment {
                 }).orElseThrow(() -> new RuntimeException("Comment not found !"));
 }
     @Override
-    public Comment retrieveComment(Integer IdComment) {
-        return commentRepository.findById(IdComment).get();
+    public Comment retrieveComment(Integer IdComment) throws Exception {
+        Optional<Comment> commentOptional = commentRepository.findById(IdComment);
+        if (!commentOptional.isPresent()) {
+            throw new Exception("Comment with ID " + IdComment + " does not exist.");
+        }
+        return commentOptional.get();
     }
 
+
     @Override
-    public void removeComment(Integer IdComment) {
+    public void removeComment(Integer IdComment) throws Exception {
+        if (!commentRepository.existsById(IdComment)) {
+            throw new Exception("Comment with ID " + IdComment + " does not exist.");
+        }
         commentRepository.deleteById(IdComment);
     }
 
 
     @Override
-    public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication) {
-        UserApp user = userRepository.findById(userID).orElse(null);
-        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
+    public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication) throws Exception {
+        UserApp user = userRepository.findById(userID).orElseThrow(() -> new Exception("User with ID " + userID + " does not exist."));
+        Publication publication = publicationRepository.findById(IdPublication).orElseThrow(() -> new Exception("Publication with ID " + IdPublication + " does not exist."));
         comment.setCommPub(publication);
         comment.setUserAppComment(user);
         String descriptionFiltree = filtrerMotsInterdits(comment.getDescriptionCommentaire());
@@ -70,21 +78,19 @@ public class ServiceComment implements IServiceComment {
         commentRepository.save(comment);
 
     }
-
-    private String filtrerMotsInterdits(String description) {
+    private String filtrerMotsInterdits(String descriptionCommentaire) {
         // Liste de mots interdits
         List<String> motsInterdits = Arrays.asList("insulte", "haine", "racisme");
 
         for (String motInterdit : motsInterdits) {
-            description = description.replaceAll(motInterdit, "***");
+            descriptionCommentaire = descriptionCommentaire.replaceAll(motInterdit, "***");
         }
 
-        return description;
+        return descriptionCommentaire
+                ;
     }
 
-
     @Override
-
     public Comment reportComment(int idComment, long userId) throws Exception {
         Optional<Comment> commentOptional = commentRepository.findById(idComment);
         if (!commentOptional.isPresent()) {
@@ -106,25 +112,20 @@ public class ServiceComment implements IServiceComment {
 
         comment.getReportedBy().add(userId);
         comment.setSignalCount(comment.getSignalCount() + 1);
-        if (comment.getSignalCount() >= 10) {
+        if (comment.getSignalCount() >= 3) {
             commentRepository.delete(comment);
             return null;
         } else {
             return commentRepository.save(comment);
         }
     }
-
-    //------
-
 }
 
 
 
 
 
-
-
-    //--------------------------------------------
+//--------------------------------------------
 /*
     @Override
     public Comment addComment(Comment comm) {

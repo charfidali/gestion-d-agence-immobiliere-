@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Services.IServicePublication;
@@ -29,13 +30,19 @@ public class ControllerPublication {
 
     @GetMapping("/RetrievePublication/{IdPublication}")
     ResponseEntity<Publication> retrievePublication(@PathVariable Integer IdPublication) {
+
         Publication publication = iServicePublication.retrievePublication(IdPublication);
         return ResponseEntity.ok().body(publication);
     }
 
     @DeleteMapping("/DeletePublication/{IdPublication}")
-    void removePublication(@PathVariable Integer IdPublication) {
-        iServicePublication.removePublication(IdPublication);
+    void removePublication(@PathVariable Integer IdPublication) throws Exception {
+        try {
+            iServicePublication.removePublication(IdPublication);
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Publication with ID " + IdPublication + " does not exist.", e);
+        }
+
     }
 
     @PostMapping("/addAndAffectPublicationTouser/{userID}")

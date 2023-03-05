@@ -26,26 +26,43 @@ public class ControllerComment {
     }
 
     @PutMapping("/UpdateComment/{IdComment}")
-    Comment updateComment(@PathVariable int IdComment, @RequestBody Comment comm) {
+    Comment updateComment(@PathVariable int IdComment, @RequestBody Comment comm) throws Exception {
+try {
+    return iServiceComment.updateComment(IdComment, comm);
+} catch (Exception e){
+    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
+}
 
-        return iServiceComment.updateComment(IdComment, comm);
     }
 
     @GetMapping("/retrieveComment/{IdComment}")
-    Comment retrieveComment(Integer IdComment) {
-
-        return iServiceComment.retrieveComment(IdComment);
+    Comment retrieveComment(Integer IdComment) throws Exception {
+        try {
+            return iServiceComment.retrieveComment(IdComment);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
+        }
     }
 
     @DeleteMapping("/DeleteComment/{IdComment}")
-    void removeComment(Integer IdComment) {
-
-        iServiceComment.removeComment(IdComment);
+    ResponseEntity<String> removeComment(Integer IdComment) throws Exception {
+try {
+    iServiceComment.removeComment(IdComment);
+    return ResponseEntity.ok("Comment with with Id " + IdComment + " has been successfully deleted");
+} catch (Exception e){
+    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
+}
     }
 
     @PostMapping("/ajouterEtAffecterCommentaireAUserEtCommentaire/{userID}/{IdPublication}")
-    public void ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication) {
-        iServiceComment.ajouterEtAffecterCommentaireAUserEtCommentaire(comment, userID, IdPublication);
+    public ResponseEntity<String> ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication) throws Exception {
+
+      try {
+          iServiceComment.ajouterEtAffecterCommentaireAUserEtCommentaire(comment, userID, IdPublication);
+          return ResponseEntity.ok("Comment added to Pub with Id " + IdPublication + " by user with Id " + userID);
+      } catch (Exception e){
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting Comment: " + e.getMessage());
+      }
     }
     //-------------------------
 
