@@ -1,5 +1,6 @@
 package pi.app.estatemarket.Entities;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -7,24 +8,27 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(name = "contract")
+@Entity(name = "payment")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Contract implements Serializable {
+public class Payment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int IdContract;
-    @Temporal(TemporalType.DATE)
-    private Date StartDateContract;
-    @Temporal(TemporalType.DATE)
-    private Date EndDateContract;
-    private String TypeContract;
-    @JsonIgnore
+    private int id;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date paymentDate;
+
+    private String paymentId;
+
+    private String paymentMethod;
+
+    private double amount;
 
     @ManyToOne
-    private UserApp userAppContract;
+    @JsonIgnore
+    private UserApp userApp;
 
 }

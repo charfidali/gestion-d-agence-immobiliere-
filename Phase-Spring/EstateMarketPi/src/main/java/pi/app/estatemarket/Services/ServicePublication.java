@@ -2,6 +2,7 @@ package pi.app.estatemarket.Services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import pi.app.estatemarket.Entities.Likee;
@@ -48,7 +49,7 @@ public class ServicePublication implements IServicePublication {
                     publication1.setDescriptionPublication(publication.getDescriptionPublication());
                     publication1.setTitrePub(publication.getTitrePub());
                     return publicationRepository.save(publication1);
-                }).orElseThrow(() -> new RuntimeException("Publication non trouvé !"));
+                }).orElseThrow(() -> new RuntimeException("Publication not found !"));
     }
 
     @Override
@@ -64,13 +65,18 @@ public class ServicePublication implements IServicePublication {
         publicationRepository.deleteById(IdPublication);
     }
 
-
     @Override
-    public void ajouterEtAffecterPublicationAuser(Publication publication, Long userID) {
+    public Publication addAndAffectPublicationTouser(Publication publication, Long userID) throws Exception{
 
         UserApp user = userRepository.findById(userID).orElse(null);
         publication.setUserAppPub(user);
-        publicationRepository.save(publication);
+        for (Publication existingPublication : getAllPublications()) {
+            double similarity = new JaroWinklerSimilarity().apply(existingPublication.getDescriptionPublication(), publication.getDescriptionPublication());
+            if (similarity > 0.8) { // Set a threshold for similarity
+                throw new Exception("A similar publication already exists.");
+            }
+        }
+        return publicationRepository.save(publication);
     }
 
     @Override
@@ -109,11 +115,4 @@ public class ServicePublication implements IServicePublication {
     }
 
 
-
-    //----------------
-    /*
-    @Override
-    public List<Publication> getMostCommentedPublications() {
-        return publicationRepository.findAllByOrderByCommentsPubAsc();
-    }*/
 }
