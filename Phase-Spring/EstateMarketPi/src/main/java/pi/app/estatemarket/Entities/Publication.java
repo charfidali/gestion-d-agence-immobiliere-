@@ -55,6 +55,8 @@ public class Publication implements Serializable {
     }
 
     //-------
-
+    @OneToOne
+    @JoinColumn(name = "pinned_comment_id")
+    private Comment pinnedComment;
 
 }

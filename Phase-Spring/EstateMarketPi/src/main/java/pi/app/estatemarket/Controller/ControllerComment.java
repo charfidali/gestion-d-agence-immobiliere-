@@ -54,15 +54,15 @@ try {
 }
     }
 
-    @PostMapping("/ajouterEtAffecterCommentaireAUserEtCommentaire/{userID}/{IdPublication}")
-    public ResponseEntity<String> ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication) throws Exception {
 
-      try {
-          iServiceComment.ajouterEtAffecterCommentaireAUserEtCommentaire(comment, userID, IdPublication);
-          return ResponseEntity.ok("Comment added to Pub with Id " + IdPublication + " by user with Id " + userID);
-      } catch (Exception e){
-          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting Comment: " + e.getMessage());
-      }
+    @PostMapping("/ajouterEtAffecterCommentaireAUserEtCommentaire/{userID}/{IdPublication}")
+    public ResponseEntity<String> ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication) {
+        try {
+            iServiceComment.ajouterEtAffecterCommentaireAUserEtCommentaire(comment, userID, IdPublication);
+            return ResponseEntity.ok("Comment added to Pub with Id " + IdPublication + " by user with Id " + userID);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding Comment: " + e.getMessage());
+        }
     }
     //-------------------------
 
@@ -76,6 +76,22 @@ try {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding Report: " + e.getMessage());
         }
     }
+
+
+
+    //----------
+    @PostMapping("/PinComment/{IdPublication}/{userID}/{idComment}")
+    public ResponseEntity<String> epinglerCommentaire(@PathVariable Long userID, @PathVariable int IdPublication, @PathVariable int idComment) {
+        try {
+
+            iServiceComment.epinglerCommentaire(userID, IdPublication, idComment);
+            return ResponseEntity.ok("Comment pinned successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
+        }
+    }
+
 }
 
 

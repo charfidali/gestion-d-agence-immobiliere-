@@ -18,6 +18,9 @@ public interface IServiceComment {
 
     Comment reportComment(int idComment, long userId) throws Exception;
 
+    //----------
+    void epinglerCommentaire(Long userID, int IdPublication, int idComment) throws Exception;
+
 
     //-----------------
 
