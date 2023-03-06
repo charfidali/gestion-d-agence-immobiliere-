@@ -63,6 +63,7 @@ public class UserApp implements Serializable {
         @JsonIgnore
         @OneToMany(mappedBy = "userAppAgency")
         private Set<Agency> agencies;
+
         @JsonIgnore
         @OneToMany(mappedBy = "userAppContract")
         private Set<Contract> contracts;
