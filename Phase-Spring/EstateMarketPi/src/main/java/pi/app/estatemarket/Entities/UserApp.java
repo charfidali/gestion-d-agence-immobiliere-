@@ -85,5 +85,8 @@ public class UserApp implements Serializable {
         public Role getRole() {
                 return role;
         }
+
+
+
 }
 

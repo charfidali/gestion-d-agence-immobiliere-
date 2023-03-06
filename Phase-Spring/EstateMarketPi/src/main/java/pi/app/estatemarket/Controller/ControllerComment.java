@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pi.app.estatemarket.Entities.Comment;
+import pi.app.estatemarket.Entities.Publication;
+import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Services.IServiceComment;
 import pi.app.estatemarket.dto.CommentDTO;
 import pi.app.estatemarket.dto.UserDTO;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ControllerComment {
 
     IServiceComment iServiceComment;
+    PublicationRepository publicationRepository;
 
     @GetMapping("/RetrieveAllComments")
     List<CommentDTO> retrieveAllComments() {
@@ -64,6 +67,7 @@ try {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding Comment: " + e.getMessage());
         }
     }
+
     //-------------------------
 
 
@@ -91,6 +95,25 @@ try {
 
         }
     }
+
+
+    @PostMapping("/Disable comments/{publicationId}/{userID}")
+    public ResponseEntity<String> interdireCommentaires(@PathVariable int publicationId, @PathVariable Long userID) {
+        try {
+            Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new Exception("Publication with ID " + publicationId + " does not exist."));
+            if (!publication.getCommentsEnabled()) {
+                throw new Exception("Comments are already disabled for this post.");
+            }
+
+            iServiceComment.interdireCommentaires(publicationId, userID);
+
+            return ResponseEntity.ok("Comments disabled successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
+    }
+
 
 }
 

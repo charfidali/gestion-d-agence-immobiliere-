@@ -59,4 +59,8 @@ public class Publication implements Serializable {
     @JoinColumn(name = "pinned_comment_id")
     private Comment pinnedComment;
 
+    //-------
+    private Boolean commentsEnabled = true; // attribut pour déterminer si les commentaires sont autorisés ou non
+
+
 }

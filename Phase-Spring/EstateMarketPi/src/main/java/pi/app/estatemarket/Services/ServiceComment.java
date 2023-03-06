@@ -71,19 +71,17 @@ public class ServiceComment implements IServiceComment {
     public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication) throws Exception {
         UserApp user = userRepository.findById(userID).orElseThrow(() -> new Exception("User with ID " + userID + " does not exist."));
         Publication publication = publicationRepository.findById(IdPublication).orElseThrow(() -> new Exception("Publication with ID " + IdPublication + " does not exist."));
-
-        // Vérifier si l'utilisateur est autorisé à ajouter un commentaire
-        if (publication.getUserAppPub().equals(user)) {
-            // Affecter le commentaire à l'utilisateur et à la publication
-            comment.setCommPub(publication);
-            comment.setUserAppComment(user);
-            String descriptionFiltree = filtrerMotsInterdits(comment.getDescriptionCommentaire());
-            comment.setDescriptionCommentaire(descriptionFiltree);
-            commentRepository.save(comment);
-        } else {
-            throw new Exception("Vous n'êtes pas autorisé à ajouter un commentaire à cette publication.");
+        if (!publication.getCommentsEnabled()) {
+            throw new Exception("Comments are disabled for this post.");
         }
+        comment.setCommPub(publication);
+        comment.setUserAppComment(user);
+        String descriptionFiltree = filtrerMotsInterdits(comment.getDescriptionCommentaire());
+        comment.setDescriptionCommentaire(descriptionFiltree);
+        commentRepository.save(comment);
+
     }
+
 
     private String filtrerMotsInterdits(String descriptionCommentaire) {
         // Liste de mots interdits
@@ -146,6 +144,22 @@ public class ServiceComment implements IServiceComment {
             }
         } else {
             throw new Exception("You are not authorized to pin a comment to this post.");
+        }
+    }
+
+
+    @Override
+    public void interdireCommentaires(int IdPublication, long userID) throws Exception {
+        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
+        UserApp user = userRepository.findById(userID).orElse(null);
+
+        // Vérifier si l'utilisateur est autorisé à interdire les commentaires
+        if (publication.getUserAppPub().equals(user)) {
+            // Interdire les commentaires sur la publication
+            publication.setCommentsEnabled(false);
+            publicationRepository.save(publication);
+        } else {
+            throw new Exception("You are not authorized to disable comments on this post.");
         }
     }
 }

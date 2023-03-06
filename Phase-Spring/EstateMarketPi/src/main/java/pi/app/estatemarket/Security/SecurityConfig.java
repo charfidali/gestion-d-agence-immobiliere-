@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/UpdatePublication/**",
             "/RetrievePublication/**",
             "/DeletePublication/**",
-            "/ajouterEtAffecterPublicationAuser/**",
+            "/addAndAffectPublicationTouser/**",
             "/Afficher le nombre de commentaire par publication/**",
             "/Afficher tous les commentaire d'une publication/**",
             "/addlike/**",
@@ -62,7 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/DeleteComment/**",
             "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
             "/reportComment/**",
-            "/PinComment/**"
+            "/PinComment/**",
+            "/Disable comments/**"
 
 
             // other public endpoints of your API may be appended to this array
