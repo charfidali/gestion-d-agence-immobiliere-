@@ -27,4 +27,13 @@ public class Contract implements Serializable {
     @ManyToOne
     private UserApp userAppContract;
 
+
+    public boolean isContractActive() {
+        Date currentDate = new Date();
+        System.out.println("Current date: " + currentDate);
+        System.out.println("End date: " + this.EndDateContract);
+        boolean isActive = this.EndDateContract.after(currentDate);
+        System.out.println("Is active: " + isActive);
+        return isActive;
+    }
 }

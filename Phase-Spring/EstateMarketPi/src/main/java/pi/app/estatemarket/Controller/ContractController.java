@@ -3,9 +3,11 @@ package pi.app.estatemarket.Controller;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pi.app.estatemarket.Entities.Contract;
 import pi.app.estatemarket.Services.IContractService;
+import pi.app.estatemarket.Services.ImplContractService;
 
 import javax.transaction.Transactional;
 
@@ -37,4 +39,15 @@ public Contract updateContract( @RequestBody Contract contract){
     public Contract retrieveContract(Integer idC){
     return iContractService.retrieveContract(idC);
     }
+
+
+
+
+    @GetMapping("/{id}/active")
+    public String isContractActive(@PathVariable int id) {
+        return iContractService.isContractActive(id);
+    }
+
 }
+
+
