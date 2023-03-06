@@ -97,9 +97,6 @@ public class JwtUtil {
         if (isManager != null && isManager == true) {
             roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_MANAGER"));
         }
-        if (isManager != null && isManager == true) {
-            roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_MANAGER"));
-        }
         if (isChefAgence != null && isChefAgence == true) {
             roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_CHEFAGENCE"));
         }

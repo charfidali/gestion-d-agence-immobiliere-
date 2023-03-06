@@ -123,8 +123,7 @@
                 String randomCode = RandomString.make(64);
                 user.setVerificationCode(randomCode);
                 user.setEnabled(false);
-                userService.createUser(user);
-                userDetailsService.sendVerificationEmail(user, "http://localhost:8085");
+                userDetailsService.sendVerificationEmail(user, "http://localhost:8085/");
                 return ResponseEntity.ok(userService.createUser(user));
             }
         }
