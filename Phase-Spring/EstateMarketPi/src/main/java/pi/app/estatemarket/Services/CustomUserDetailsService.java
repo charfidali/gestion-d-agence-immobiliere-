@@ -5,6 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,8 +21,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pi.app.estatemarket.Entities.Role;
 import pi.app.estatemarket.Entities.UserApp;
+import pi.app.estatemarket.Entities.UserPage;
+import pi.app.estatemarket.Entities.UserSearchCriteria;
 import pi.app.estatemarket.Repository.RoleRepository;
+import pi.app.estatemarket.Repository.UserCriteriaRepository;
 import pi.app.estatemarket.Repository.UserRepository;
+import pi.app.estatemarket.dto.UserDTO;
 import pi.app.estatemarket.dto.UserRequest;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -29,6 +37,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -37,6 +46,9 @@ import java.util.concurrent.TimeUnit;
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserCriteriaRepository userCriteriaRepository;
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
@@ -56,26 +68,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         throw new UsernameNotFoundException("User not found with the name " + username);
     }
-    public UserApp save(UserRequest userRequest) {
-        UserApp newUser = new UserApp();
-        newUser.setUsername(userRequest.getUsername());
-        newUser.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        Role role=new Role();
-        role.setName(userRequest.getRole_name());
-        role.setRoleId(userRequest.getRole_id());
-        newUser.setRole(role);
-        return userRepository.save(newUser);
-    }
-    public UserApp createUser(UserRequest userRequest) {
-        Role role=roleRepository.findById(userRequest.getRole_id()).orElse(null);
-        //log.info("{}",userRequest.getRole_id());
-        log.info("roleid from role{}",role.getRoleId());
-        //User user= new User();
-        UserApp user=modelMapper.map(userRequest, UserApp.class);
-        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        user.setRole(role);
-        return userRepository.save(user);
-    }
+
+
 
     public void sendEmail(String recipientEmail, String link)
             throws MessagingException, UnsupportedEncodingException {
@@ -101,8 +95,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         mailSender.send(message);
     }
+    public boolean checkIfUserExist(String email) {
+        return userRepository.findByEmailAddress(email) !=null ? true : false;
+    }
 
-    private void sendVerificationEmail(UserApp user, String siteURL)    throws MessagingException, UnsupportedEncodingException {
+    public void sendVerificationEmail(UserRequest user, String siteURL)    throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmailAddress();
         String fromAddress = "exchangeestatepi@gmail.com";
         String senderName = "Exchange Estate Support";
@@ -135,7 +132,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             user.setVerificationCode(null);
             user.setEnabled(true);
             userRepository.save(user);
-
             return true;
         }
 
@@ -173,6 +169,55 @@ public class CustomUserDetailsService implements UserDetailsService {
             }, 30, TimeUnit.SECONDS);
         }
     }
+
+
+    public List<UserDTO> getAllUsers() {
+        List<UserApp> userApps = userRepository.findAll();
+        return userApps.stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
+    }
+
+
+    public Page<UserApp> getUsers(UserPage userPage,
+                                  UserSearchCriteria userSearchCriteria){
+        return userCriteriaRepository.findAllWithFilters(userPage, userSearchCriteria);
+    }
+
+
+
+    public UserApp createUser(UserRequest userRequest) {
+        Role role=roleRepository.findById(userRequest.getRole_id()).orElse(null);
+        //log.info("{}",userRequest.getRole_id());
+        log.info("roleid from role{}",role.getRoleId());
+        //User user= new User();
+        UserApp user=modelMapper.map(userRequest, UserApp.class);
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        user.setRole(role);
+        return userRepository.save(user);
+    }
+
+
+    public UserApp updateUser( UserRequest userRequest) {
+        Role role = roleRepository.findById(userRequest.getRole_id()).orElse(null);
+        UserApp user = userRepository.findById(userRequest.getUserID()).orElse(null);
+        user = modelMapper.map(userRequest, UserApp.class);
+        if (role != null)
+            user.setRole(role);
+        return userRepository.save(user);
+    }
+
+
+    public void deleteUser(long id) {
+        userRepository.deleteById(id);
+    }
+
+
+    public UserDTO getUserById(long id) {
+        UserApp userApp =userRepository.findById(id).orElse(null);
+        return modelMapper.map(userApp, UserDTO.class);
+    }
+
 
 
 }

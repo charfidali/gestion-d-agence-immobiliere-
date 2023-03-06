@@ -9,8 +9,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pi.app.estatemarket.Services.CustomUserDetailsService;
 
@@ -26,6 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    private LogoutService logoutHandler;
+
+
+    @Autowired
+    private AuthenticationFailureHandler authFail;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -33,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private static final String[] AUTH_WHITELIST = {
-            "/forgot_password","/reset_password","/update_password","/", "/verify","/login","/logout",
+            "/forgot_password","/reset_password","/update_password","/","/verify","/login",
+            "/googleAuth",
             // -- Swagger UI v2
             "/v2/api-docs",
             "/swagger-resources",
@@ -79,14 +88,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/api/role/**","/api/user/**").hasRole("ADMIN")
-                .antMatchers("/api/user").hasRole("USER")
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .anyRequest().authenticated()
-                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
-                and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and().addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .authorizeRequests().antMatchers("/api/role/**","/api/user/**","/logout").hasRole("ADMIN")
+                .antMatchers("/api/user/**","/logout").hasRole("USER")
+                .antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
+                .and().formLogin().loginPage("/login")
+                .and().logout()
+                .logoutUrl("/logout").logoutSuccessUrl("/login").addLogoutHandler(logoutHandler)
+                .deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true)
+                //.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+                .and().oauth2Login()
+                .failureHandler(authFail)
+                .defaultSuccessUrl("/googleAuth");
+               //.authorizationEndpoint();
+
+
+               // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
+
+                http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                        .exceptionHandling()
+                        .accessDeniedHandler(jwtAuthenticationEntryPoint);
     }
 
 }

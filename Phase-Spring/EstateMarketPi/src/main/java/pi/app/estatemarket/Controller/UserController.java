@@ -24,8 +24,6 @@ import java.util.List;
 @Transactional
 public class UserController {
     @Autowired
-    private JavaMailSender mailSender;
-    @Autowired
     private final IUserService userService;
     @GetMapping
     public List<UserDTO> getAllUsers() {
@@ -35,6 +33,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
 
     public UserApp createUser(@RequestBody UserRequest userRequest){
+
         return userService.createUser(userRequest);}
 
     @ResponseStatus(HttpStatus.OK)
@@ -54,3 +53,4 @@ public class UserController {
     }
 
 }
+
