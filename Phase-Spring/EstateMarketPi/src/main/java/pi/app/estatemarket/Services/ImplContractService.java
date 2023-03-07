@@ -25,16 +25,19 @@ import java.util.stream.Collectors;
 @Slf4j
 
 public class ImplContractService implements IContractService {
+
+
    // @Autowired
     private final ContractRepository contractRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+
     @Autowired
     JavaMailSender javaMailSender;
 
     public List<ContractDTO> getAllContracts() {
         List<Contract> contracts = contractRepository.findAll();
-        return getAllContracts().stream()
+        return contracts.stream()
                 .map(contract -> modelMapper.map(contract, ContractDTO.class))
                 .collect(Collectors.toList());
     }
@@ -89,7 +92,8 @@ public class ImplContractService implements IContractService {
         return "Contract not found";
     }
 
-}
+    }
+
 
 
 

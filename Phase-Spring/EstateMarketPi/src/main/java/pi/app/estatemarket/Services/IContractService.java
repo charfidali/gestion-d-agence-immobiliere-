@@ -14,4 +14,6 @@ public interface IContractService {
 
 void addaffectContractToUser(Contract contract ,Long userID);
     String isContractActive(int id);
+
+
 }
