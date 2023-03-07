@@ -49,8 +49,8 @@ public class ControllerPublication {
     public ResponseEntity<String> ajouterEtAffecterPublicationAuser(@RequestBody Publication publication, @PathVariable Long userID) throws Exception{
         try {
 
-         iServicePublication.addAndAffectPublicationTouser(publication, userID);
-        return ResponseEntity.ok("Publication added by user Id"+ userID);
+            iServicePublication.addAndAffectPublicationTouser(publication, userID);
+            return ResponseEntity.ok("Publication added by user Id"+ userID);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding publication: " + e.getMessage());
