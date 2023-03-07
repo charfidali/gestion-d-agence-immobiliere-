@@ -10,11 +10,14 @@ import java.util.List;
 
 public interface IServiceComment {
     List<CommentDTO> getAllComments();
-    Comment retrieveComment (Integer IdComment) throws Exception;
-    Comment updateComment (int IdComment, Comment comm) throws Exception;
-    void removeComment (Integer IdComment) throws Exception;
-    public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication ) throws Exception;
 
+    Comment retrieveComment(Integer IdComment) throws Exception;
+
+    Comment updateComment(int IdComment, Comment comm) throws Exception;
+
+    void removeComment(Integer IdComment) throws Exception;
+
+    public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication) throws Exception;
 
 
     Comment reportComment(int idComment, long userId) throws Exception;
@@ -23,9 +26,9 @@ public interface IServiceComment {
     void epinglerCommentaire(Long userID, int IdPublication, int idComment) throws Exception;
 
     void interdireCommentaires(int IdPublication, long userID) throws Exception;
+}
 
 
-    //-----------------
 
 
 
@@ -46,8 +49,4 @@ public interface IServiceComment {
 
 
     //  List<Comment> getAllFilteredComments();
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> 8b4541fea8cb2538120012f98cdae62e9a27649d
+
