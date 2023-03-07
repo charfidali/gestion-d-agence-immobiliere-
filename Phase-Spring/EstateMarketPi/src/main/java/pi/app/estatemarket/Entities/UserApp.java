@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -76,9 +77,10 @@ public class UserApp implements Serializable {
         @JsonIgnore
         @OneToMany(mappedBy = "userAppAnnouncement")
         private Set<Announcement> announcements;
+
         @JsonIgnore
-        @ManyToMany
-        private Set<UserApp> appointments;
+        @ManyToMany(cascade = CascadeType.ALL, mappedBy = "users")
+        private List<Appointment> appointments;
 
         @OneToMany(mappedBy = "userL")
         private List<Likee> likeList;
