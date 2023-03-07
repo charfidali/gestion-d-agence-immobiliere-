@@ -39,7 +39,7 @@ public class ServiceComment implements IServiceComment {
         return comments.stream()
                 .map(comment -> modelMapper.map(comment, CommentDTO.class))
                 .collect(Collectors.toList());
-    }   
+    }
 
     @Override
     public Comment updateComment(int IdComment, Comment comm) throws Exception {
