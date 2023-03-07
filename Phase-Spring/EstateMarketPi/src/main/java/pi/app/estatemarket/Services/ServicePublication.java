@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Entities.UserApp;
@@ -12,8 +13,7 @@ import pi.app.estatemarket.Repository.LikeRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor

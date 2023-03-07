@@ -136,9 +136,14 @@ public class ServiceComment implements IServiceComment {
         if (publication.getUserAppPub().equals(user)) {
             // Vérifier si le commentaire appartient à la publication
             if (commentaire.getCommPub().equals(publication)) {
-                // Épingler le commentaire
-                publication.setPinnedComment(commentaire);
-                publicationRepository.save(publication);
+                // Vérifier si le commentaire n'a pas été signalé
+                if (commentaire.getSignalCount() == 0) {
+                    // Épingler le commentaire
+                    publication.setPinnedComment(commentaire);
+                    publicationRepository.save(publication);
+                } else {
+                    throw new Exception("You cannot pin a reported comment.");
+                }
             } else {
                 throw new Exception("The comment does not belong to this post.");
             }
