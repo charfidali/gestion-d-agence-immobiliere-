@@ -2,6 +2,7 @@ package pi.app.estatemarket.Services;
 
 import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Entities.Publication;
+import pi.app.estatemarket.Entities.UserApp;
 import pi.app.estatemarket.dto.CommentDTO;
 import pi.app.estatemarket.dto.PublicationDTO;
 
@@ -17,6 +18,11 @@ public interface IServiceComment {
 
 
     Comment reportComment(int idComment, long userId) throws Exception;
+
+    //----------
+    void epinglerCommentaire(Long userID, int IdPublication, int idComment) throws Exception;
+
+    void interdireCommentaires(int IdPublication, long userID) throws Exception;
 
 
     //-----------------
@@ -39,5 +45,5 @@ public interface IServiceComment {
 
 
 
-  //  List<Comment> getAllFilteredComments();
+    //  List<Comment> getAllFilteredComments();
 }
