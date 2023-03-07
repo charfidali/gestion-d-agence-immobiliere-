@@ -13,7 +13,7 @@ public interface IServicePublication {
     Publication updatePublication (int ID, Publication publication);
 
 
-    Publication retrievePublication (Integer IdPublication);
+    Publication retrievePublication (Integer IdPublication) throws Exception;
 
     void removePublication (Integer IdPublication) throws Exception;
 
@@ -28,5 +28,6 @@ public interface IServicePublication {
 
     void addLikeToPost(Likee likee, Integer idPost, Long idUser) throws Exception;
 
+    void interdireCommentaires(int IdPublication, long userID) throws Exception;
 
 }

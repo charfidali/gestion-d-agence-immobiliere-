@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/RetrievePublication/**",
             "/DeletePublication/**",
             "/addAndAffectPublicationTouser/**",
-            "/Afficher le nombre de commentaire par publication/**",
+            "/countCommentsByPublication/{idPublication}/**",
             "/Afficher tous les commentaire d'une publication/**",
             "/addlike/**",
 
