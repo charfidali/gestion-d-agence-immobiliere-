@@ -84,15 +84,20 @@ public class ImplContractService implements IContractService {
             long diffInMillies = Math.abs(currentDate.getTime() - contract.getEndDateContract().getTime());
             long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
             if (contract.getEndDateContract().after(currentDate)) {
-                return "Contract is active";
+                return "Contract is active. " + diffInDays + " days remaining before expiration.";
             } else {
-                return "Contract has been expired for " + diffInDays + " days";
+                return "Contract has been expired for " + diffInDays + " days.";
             }
         }
         return "Contract not found";
     }
 
-    }
+
+
+        }
+
+
+
 
 
 
