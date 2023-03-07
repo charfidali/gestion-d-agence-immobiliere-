@@ -40,7 +40,6 @@ public class JwtUtil {
         this.jwtExpirationInMs = jwtExpirationInMs;
     }
 
-    // generate token for user
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
@@ -49,6 +48,12 @@ public class JwtUtil {
         }
         if (roles.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             claims.put("isUser", true);
+        }
+        if (roles.contains(new SimpleGrantedAuthority("ROLE_MANAGER"))) {
+            claims.put("isManager", true);
+        }
+        if (roles.contains(new SimpleGrantedAuthority("ROLE_CHEFAGENCE"))) {
+            claims.put("isChefAgence", true);
         }
         return doGenerateToken(claims, userDetails.getUsername());
     }
@@ -61,7 +66,6 @@ public class JwtUtil {
 
     public boolean validateToken(String authToken) {
         try {
-            // Jwt token has not been tampered with
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
@@ -82,11 +86,19 @@ public class JwtUtil {
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken).getBody();
         Boolean isAdmin = claims.get("isAdmin", Boolean.class);
         Boolean isUser = claims.get("isUser", Boolean.class);
+        Boolean isManager = claims.get("isManager", Boolean.class);
+        Boolean isChefAgence = claims.get("isChefAgence", Boolean.class);
         if (isAdmin != null && isAdmin == true) {
             roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
         if (isUser != null && isUser == true) {
             roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+        }
+        if (isManager != null && isManager == true) {
+            roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_MANAGER"));
+        }
+        if (isChefAgence != null && isChefAgence == true) {
+            roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_CHEFAGENCE"));
         }
         return roles;
     }

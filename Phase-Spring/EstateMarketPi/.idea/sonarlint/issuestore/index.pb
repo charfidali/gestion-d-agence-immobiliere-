@@ -1,6 +1,4 @@
 
-i
-9src/main/java/pi/app/estatemarket/Services/AppConfig.java,1\2\126ec2fde0477df4a840d961cd1c5958948f01c7
 s
 Csrc/main/java/pi/app/estatemarket/Repository/PaymentRepository.java,a\f\af660482220f274ef120a273ffd84562b18efaac
 p

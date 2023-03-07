@@ -46,4 +46,8 @@ public interface IServiceComment {
 
 
     //  List<Comment> getAllFilteredComments();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8b4541fea8cb2538120012f98cdae62e9a27649d

@@ -48,6 +48,12 @@ public class UserApp implements Serializable {
         @Enumerated(EnumType.STRING)
         @Column(name = "gender")
         private GenderType gender;
+        @Column(name = "verification_code", length = 64)
+        private String verificationCode;
+        private boolean enabled;
+        @Column(name = "reset_password_token")
+        private String resetPasswordToken;
+        private String secret;
         @ManyToOne
         @JoinColumn(name = "role_id")
         private Role role;
@@ -74,13 +80,8 @@ public class UserApp implements Serializable {
         @ManyToMany
         private Set<UserApp> appointments;
 
-
-
-
         @OneToMany(mappedBy = "userL")
         private List<Likee> likeList;
-
-
 
         @JsonBackReference
         public Role getRole() {
