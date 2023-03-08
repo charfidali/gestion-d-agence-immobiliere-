@@ -136,19 +136,6 @@ public class ServicePublication implements IServicePublication {
         }
     }
 
-    @Override
-    public void reactiverCommentaires(int IdPublication, long userID) throws Exception {
-        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
-        UserApp user = userRepository.findById(userID).orElse(null);
 
-        // Vérifier si l'utilisateur est autorisé à réactiver les commentaires
-        if (publication.getUserAppPub().equals(user)) {
-            // Réactiver les commentaires sur la publication
-            publication.setCommentsEnabled(true);
-            publicationRepository.save(publication);
-        } else {
-            throw new Exception("You are not authorized to enable comments on this post.");
-        }
-    }
 
 }

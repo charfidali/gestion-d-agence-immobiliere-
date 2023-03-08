@@ -2,12 +2,12 @@ package pi.app.estatemarket.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import java.util.Date;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
+
 import java.util.*;
-import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 
 
 @Entity(name = "publication")
@@ -21,14 +21,12 @@ public class Publication implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int IdPublication;
     private String TitrePub;
+    private String DescriptionPublication;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, updatable = false)
-    //updatable = false empêche toute modification de la date de publication une fois que l'objet a été créé
     private Date DatePublication;
 
-    private String DescriptionPublication;
-
     private int nombreLike = 0;
+
     @JsonIgnore
     @ManyToOne
     private UserApp userAppPub;
@@ -46,6 +44,7 @@ public class Publication implements Serializable {
 
     @PrePersist
     protected void onCreate() {
+
         DatePublication = new Date();
     }
 
@@ -56,13 +55,16 @@ public class Publication implements Serializable {
         this.views++;
     }
 
+
+    private Boolean commentsEnabled = true;
+
     //-------
     @OneToOne
     @JoinColumn(name = "pinned_comment_id")
     private Comment pinnedComment;
 
     //-------
-    private Boolean commentsEnabled = true; // attribut pour déterminer si les commentaires sont autorisés ou non
+     // attribut pour déterminer si les commentaires sont autorisés ou non
 
 
 }
