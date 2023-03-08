@@ -127,7 +127,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
                         "/reportComment/**",
                         "/PinComment/**",
-                        "/Disable comments/**").hasAnyRole("USER","ADMIN","MANAGER","CHEFAGENCE")
+                        "/Disable comments/**",
+                        "/Enable comments/**").hasAnyRole("USER","ADMIN","MANAGER","CHEFAGENCE")
 
 
                 // .antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")

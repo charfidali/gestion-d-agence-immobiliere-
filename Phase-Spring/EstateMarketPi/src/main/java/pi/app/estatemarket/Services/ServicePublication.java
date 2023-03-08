@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Entities.UserApp;
@@ -134,6 +133,21 @@ public class ServicePublication implements IServicePublication {
             publicationRepository.save(publication);
         } else {
             throw new Exception("You are not authorized to disable comments on this post.");
+        }
+    }
+
+    @Override
+    public void reactiverCommentaires(int IdPublication, long userID) throws Exception {
+        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
+        UserApp user = userRepository.findById(userID).orElse(null);
+
+        // Vérifier si l'utilisateur est autorisé à réactiver les commentaires
+        if (publication.getUserAppPub().equals(user)) {
+            // Réactiver les commentaires sur la publication
+            publication.setCommentsEnabled(true);
+            publicationRepository.save(publication);
+        } else {
+            throw new Exception("You are not authorized to enable comments on this post.");
         }
     }
 

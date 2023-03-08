@@ -30,6 +30,7 @@ public class Comment implements Serializable {
     private UserApp userAppComment;
 
 
+    @JsonIgnore
     @ManyToOne
     private Publication commPub;
 

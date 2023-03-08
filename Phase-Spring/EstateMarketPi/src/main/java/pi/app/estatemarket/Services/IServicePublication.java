@@ -30,4 +30,5 @@ public interface IServicePublication {
 
     void interdireCommentaires(int IdPublication, long userID) throws Exception;
 
+    void reactiverCommentaires(int IdPublication, long userID) throws Exception;
 }

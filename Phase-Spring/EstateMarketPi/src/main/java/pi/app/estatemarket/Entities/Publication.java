@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 
@@ -24,6 +25,7 @@ public class Publication implements Serializable {
     @Column(nullable = false, updatable = false)
     //updatable = false empêche toute modification de la date de publication une fois que l'objet a été créé
     private Date DatePublication;
+
     private String DescriptionPublication;
 
     private int nombreLike = 0;
@@ -38,7 +40,7 @@ public class Publication implements Serializable {
     private List<Likee> likes = new ArrayList<>();
 
 
-    //@JsonIgnore //au cas où lezemesh les commentaires yokhrjou maa les listes de pubs
+    @JsonIgnore //au cas où lezemesh les commentaires yokhrjou maa les listes de pubs
     @OneToMany(mappedBy = "commPub")
     private Set<Comment> commentsPub;
 
