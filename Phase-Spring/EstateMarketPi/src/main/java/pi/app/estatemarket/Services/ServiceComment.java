@@ -1,5 +1,6 @@
 package pi.app.estatemarket.Services;
 
+//import com.itextpdf.text.ExceptionConverter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,7 @@ import pi.app.estatemarket.Repository.CommentRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.CommentDTO;
+import pi.app.estatemarket.dto.PublicationDTO;
 
 //import pi.app.estatemarket.dto.PublicationDTO;
 
@@ -49,12 +51,10 @@ public class ServiceComment implements IServiceComment {
     }
 
     @Override
-    public Comment retrieveComment(Integer IdComment) throws Exception {
-        Optional<Comment> commentOptional = commentRepository.findById(IdComment);
-        if (!commentOptional.isPresent()) {
-            throw new Exception("Comment with ID " + IdComment + " does not exist.");
-        }
-        return commentOptional.get();
+    public Comment retrieveComment(int  IdComment) throws Exception {
+        Comment comment = commentRepository.findById(IdComment).orElseThrow(() ->
+                new Exception("Comment with ID " + IdComment + " does not exist."));
+        return comment;
     }
 
 
@@ -152,21 +152,6 @@ public class ServiceComment implements IServiceComment {
         }
     }
 
-
-    @Override
-    public void interdireCommentaires(int IdPublication, long userID) throws Exception {
-        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
-        UserApp user = userRepository.findById(userID).orElse(null);
-
-        // Vérifier si l'utilisateur est autorisé à interdire les commentaires
-        if (publication.getUserAppPub().equals(user)) {
-            // Interdire les commentaires sur la publication
-            publication.setCommentsEnabled(false);
-            publicationRepository.save(publication);
-        } else {
-            throw new Exception("You are not authorized to disable comments on this post.");
-        }
-    }
 }
 
 
