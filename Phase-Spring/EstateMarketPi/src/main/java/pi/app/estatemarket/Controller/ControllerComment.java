@@ -6,9 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pi.app.estatemarket.Entities.Comment;
+import pi.app.estatemarket.Entities.Publication;
+import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Services.IServiceComment;
 import pi.app.estatemarket.dto.CommentDTO;
+import pi.app.estatemarket.dto.UserDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,6 +20,7 @@ import java.util.List;
 public class ControllerComment {
 
     IServiceComment iServiceComment;
+    PublicationRepository publicationRepository;
 
     @GetMapping("/RetrieveAllComments")
     List<CommentDTO> retrieveAllComments() {
@@ -34,13 +39,16 @@ public class ControllerComment {
     }
 
     @GetMapping("/retrieveComment/{IdComment}")
-    public Comment retrieveComment(@PathVariable int IdComment) throws Exception{
-        return iServiceComment.retrieveComment(IdComment);
-
+    Comment retrieveComment(Integer IdComment) throws Exception {
+        try {
+            return iServiceComment.retrieveComment(IdComment);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
+        }
     }
 
     @DeleteMapping("/DeleteComment/{IdComment}")
-    ResponseEntity<String> removeComment(@PathVariable Integer IdComment) throws Exception {
+    ResponseEntity<String> removeComment(Integer IdComment) throws Exception {
         try {
             iServiceComment.removeComment(IdComment);
             return ResponseEntity.ok("Comment with with Id " + IdComment + " has been successfully deleted");
@@ -48,6 +56,7 @@ public class ControllerComment {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
         }
     }
+
 
     @PostMapping("/ajouterEtAffecterCommentaireAUserEtCommentaire/{userID}/{IdPublication}")
     public ResponseEntity<String> ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication) {
@@ -85,6 +94,24 @@ public class ControllerComment {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
         }
+    }
+
+
+    @PostMapping("/Disable comments/{publicationId}/{userID}")
+    public ResponseEntity<String> interdireCommentaires(@PathVariable int publicationId, @PathVariable Long userID) {
+        try {
+            Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new Exception("Publication with ID " + publicationId + " does not exist."));
+            if (!publication.getCommentsEnabled()) {
+                throw new Exception("Comments are already disabled for this post.");
+            }
+
+            iServiceComment.interdireCommentaires(publicationId, userID);
+
+            return ResponseEntity.ok("Comments disabled successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
     }
 
 
