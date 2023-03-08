@@ -52,8 +52,12 @@ public class ServiceComment implements IServiceComment {
 
     @Override
     public Comment retrieveComment(int  IdComment) throws Exception {
-        Comment comment = commentRepository.findById(IdComment).orElseThrow(() ->
-                new Exception("Comment with ID " + IdComment + " does not exist."));
+        Optional<Comment>OptionalComment = commentRepository.findById(IdComment);
+        if (!OptionalComment.isPresent()){
+            throw new Exception("comment with Id"+IdComment+"does not exist.");
+        }
+        Comment comment = OptionalComment.get();
+        commentRepository.save(comment);
         return comment;
     }
 

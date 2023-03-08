@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/register",
 
 
-            "/RetrieveAllPublications",
+/*            "/RetrieveAllPublications",
             "/UpdatePublication/**",
             "/RetrievePublication/**",
             "/DeletePublication/**",
@@ -68,8 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/Afficher le nombre de commentaire par publication/**",
             "/Afficher tous les commentaire d'une publication/**",
             "/addlike/**",
-
-
             "/RetrieveAllComments",
             "/UpdateComment/**",
             "/retrieveComment/**",
@@ -77,19 +75,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
             "/reportComment/**",
             "/PinComment/**",
-            "/Disable comments/**",
+            "/Disable comments/**",*/
+
 
             "/api/contract/**",
             "/pdf",
             "/api/payment/**",
             "/api/chatwork",
-            "/PinComment/**",
-            "/Disable comments/**",
+
 
             "/api/chatwork",
 
             "/chat"
-
 
             // other public endpoints of your API may be appended to this array
     };
@@ -112,9 +109,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/api/role/**","/api/user/**","/api/contract/**","/pdf").hasRole("ADMIN")
-                .antMatchers("/api/user/**","/logout","/api/payment/**").hasRole("USER")
 
-               // .antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
+                .antMatchers("/api/user/**","/logout","/api/payment/**").hasRole("USER")
+                .antMatchers(            "/RetrieveAllPublications",
+                        "/UpdatePublication/**",
+                        "/RetrievePublication/**",
+                        "/DeletePublication/**",
+                        "/addAndAffectPublicationTouser/**",
+                        "/countCommentsByPublication/{idPublication}/**",
+                        "/Afficher le nombre de commentaire par publication/**",
+                        "/Afficher tous les commentaire d'une publication/**",
+                        "/addlike/**",
+                        "/RetrieveAllComments",
+                        "/UpdateComment/**",
+                        "/RetrieveComment/**",
+                        "/DeleteComment/**",
+                        "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
+                        "/reportComment/**",
+                        "/PinComment/**",
+                        "/Disable comments/**").hasAnyRole("USER","ADMIN","MANAGER","CHEFAGENCE")
+
+
+                // .antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
                 .antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
 
 

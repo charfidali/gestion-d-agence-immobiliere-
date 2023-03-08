@@ -6,12 +6,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pi.app.estatemarket.Entities.Comment;
+import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Services.IServiceComment;
 import pi.app.estatemarket.dto.CommentDTO;
 
 import java.util.List;
 
 @AllArgsConstructor
+/*
+@RequestMapping("/api/comments")
+*/
 @RestController
 public class ControllerComment {
 
@@ -33,12 +37,15 @@ public class ControllerComment {
 
     }
 
-    @GetMapping("/retrieveComment/{IdComment}")
-    public Comment retrieveComment(@PathVariable int IdComment) throws Exception{
-        return iServiceComment.retrieveComment(IdComment);
-
+    @GetMapping("/RetrieveComment/{IdComment}")
+    public ResponseEntity<Comment>  retrieveComment(@PathVariable int IdComment) throws Exception {
+        try {
+            Comment comment = iServiceComment.retrieveComment(IdComment);
+            return ResponseEntity.ok(comment);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
-
     @DeleteMapping("/DeleteComment/{IdComment}")
     ResponseEntity<String> removeComment(@PathVariable Integer IdComment) throws Exception {
         try {
