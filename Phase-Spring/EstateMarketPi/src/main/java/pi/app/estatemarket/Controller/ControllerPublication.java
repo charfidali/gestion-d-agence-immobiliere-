@@ -101,12 +101,12 @@ public class ControllerPublication {
 
     }
 
-    @PostMapping("/Enable comments/{publicationId}/{userID}")
-    public ResponseEntity<String> reactiverCommentaires(@PathVariable("id") int publicationId,
-                                                        @PathVariable("userId") long userId) {
+    @PostMapping("/Enable comments/{IdPublication}/{userID}")
+    public ResponseEntity<String> reactiverCommentaires(@PathVariable("IdPublication") int IdPublication,
+                                                        @PathVariable("userID") long userID) throws Exception{
         try {
-            iServicePublication.reactiverCommentaires(publicationId, userId);
-            return ResponseEntity.ok("Comments enabled for publication " + publicationId);
+            iServicePublication.reactiverCommentaires(IdPublication, userID);
+            return ResponseEntity.ok("Comments enabled for publication " + IdPublication);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }
