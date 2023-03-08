@@ -1,0 +1,9 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Οµχτόÿÿÿÿ
+o	java:S116"URename this field "IdContract" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(δ²¬έώÿÿÿÿ
+v	java:S116"\Rename this field "StartDateContract" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Φ¬ηθϋÿÿÿÿ
+t	java:S116"ZRename this field "EndDateContract" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°›£±ÿÿÿÿÿ
+l	java:S116"WRename this field "TypeContract" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„έ‰
+S	java:S106""9Replace this use of System.out or System.err by a logger.(°ªίξύÿÿÿÿ
+S	java:S106#"9Replace this use of System.out or System.err by a logger.(®π—¶ψÿÿÿÿ
+N	java:S106%"9Replace this use of System.out or System.err by a logger.(¤Ψ±

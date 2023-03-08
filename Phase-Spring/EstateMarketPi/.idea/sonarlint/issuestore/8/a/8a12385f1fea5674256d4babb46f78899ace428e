@@ -1,0 +1,18 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(’ü›É
+]
+java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(¡í„¥8öûáë0
+o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âª´ùÿÿÿÿ8÷ûáë0
+b
+java:S4684$"@Replace this persistent entity with a simple POJO or DTO object.(»õæ¡üÿÿÿÿ8øûáë0
+u
+java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(¡¸Îùÿÿÿÿ8…Ëûàë0
+b
+java:S1128"@Remove this unused import 'org.springframework.http.HttpStatus'.(íŸ¤Šúÿÿÿÿ8…Ëûàë0
+f
+java:S1128"DRemove this unused import 'org.springframework.http.ResponseEntity'.(¶¯ø¦úÿÿÿÿ8ıûáë0
+j
+java:S1128
+"MRemove this unused import 'pi.app.estatemarket.Services.ImplContractService'.(ò‰óî8ıûáë0
+^
+java:S1128"<Remove this unused import 'javax.transaction.Transactional'.(ûÒçÑúÿÿÿÿ8ıûáë0
