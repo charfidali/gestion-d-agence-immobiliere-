@@ -13,7 +13,10 @@ import pi.app.estatemarket.Repository.ContractRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.ContractDTO;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -91,6 +94,7 @@ public class ImplContractService implements IContractService {
         }
         return "Contract not found";
     }
+
 
 
 

@@ -6,6 +6,8 @@ import pi.app.estatemarket.dto.ContractDTO;
 import java.util.List;
 import java.util.Optional;
 
+import static pi.app.estatemarket.Services.PDFGeneratorService.RecRepo;
+
 public interface IContractService {
     List<ContractDTO> getAllContracts();
     Contract updateContract(Contract contract);
@@ -14,6 +16,7 @@ public interface IContractService {
 
 void addaffectContractToUser(Contract contract ,Long userID);
     String isContractActive(int id);
+
 
 
 }
