@@ -1,5 +1,6 @@
 package pi.app.estatemarket.Services;
 
+//import com.itextpdf.text.ExceptionConverter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -13,10 +14,10 @@ import pi.app.estatemarket.Repository.CommentRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.CommentDTO;
+import pi.app.estatemarket.dto.PublicationDTO;
 
 //import pi.app.estatemarket.dto.PublicationDTO;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -41,20 +42,19 @@ public class ServiceComment implements IServiceComment {
     }
 
     @Override
-    public Comment updateComment(int IdComment, Comment comm) throws Exception{
+    public Comment updateComment(int IdComment, Comment comm) throws Exception {
         return commentRepository.findById(IdComment)
                 .map(comment1 -> {
                     comment1.setDescriptionCommentaire(comm.getDescriptionCommentaire());
                     return commentRepository.save(comment1);
                 }).orElseThrow(() -> new RuntimeException("Comment not found !"));
-}
+    }
+
     @Override
-    public Comment retrieveComment(Integer IdComment) throws Exception {
-        Optional<Comment> commentOptional = commentRepository.findById(IdComment);
-        if (!commentOptional.isPresent()) {
-            throw new Exception("Comment with ID " + IdComment + " does not exist.");
-        }
-        return commentOptional.get();
+    public Comment retrieveComment(int  IdComment) throws Exception {
+        Comment comment = commentRepository.findById(IdComment).orElseThrow(() ->
+                new Exception("Comment with ID " + IdComment + " does not exist."));
+        return comment;
     }
 
 
@@ -71,6 +71,9 @@ public class ServiceComment implements IServiceComment {
     public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication) throws Exception {
         UserApp user = userRepository.findById(userID).orElseThrow(() -> new Exception("User with ID " + userID + " does not exist."));
         Publication publication = publicationRepository.findById(IdPublication).orElseThrow(() -> new Exception("Publication with ID " + IdPublication + " does not exist."));
+        if (!publication.getCommentsEnabled()) {
+            throw new Exception("Comments are disabled for this post.");
+        }
         comment.setCommPub(publication);
         comment.setUserAppComment(user);
         String descriptionFiltree = filtrerMotsInterdits(comment.getDescriptionCommentaire());
@@ -78,6 +81,8 @@ public class ServiceComment implements IServiceComment {
         commentRepository.save(comment);
 
     }
+
+
     private String filtrerMotsInterdits(String descriptionCommentaire) {
         // Liste de mots interdits
         List<String> motsInterdits = Arrays.asList("insulte", "haine", "racisme");
@@ -119,6 +124,34 @@ public class ServiceComment implements IServiceComment {
             return commentRepository.save(comment);
         }
     }
+
+    //----------
+    @Override
+    public void epinglerCommentaire(Long userID, int IdPublication, int idComment) throws Exception {
+        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
+        UserApp user = userRepository.findById(userID).orElse(null);
+        Comment commentaire = commentRepository.findById(idComment).orElse(null);
+
+        // Vérifier si l'utilisateur est autorisé à épingler un commentaire
+        if (publication.getUserAppPub().equals(user)) {
+            // Vérifier si le commentaire appartient à la publication
+            if (commentaire.getCommPub().equals(publication)) {
+                // Vérifier si le commentaire n'a pas été signalé
+                if (commentaire.getSignalCount() == 0) {
+                    // Épingler le commentaire
+                    publication.setPinnedComment(commentaire);
+                    publicationRepository.save(publication);
+                } else {
+                    throw new Exception("You cannot pin a reported comment.");
+                }
+            } else {
+                throw new Exception("The comment does not belong to this post.");
+            }
+        } else {
+            throw new Exception("You are not authorized to pin a comment to this post.");
+        }
+    }
+
 }
 
 
@@ -154,5 +187,4 @@ public class ServiceComment implements IServiceComment {
     Comments() {
         return commentRepository.findAll();
     } */
-
 

@@ -11,5 +11,9 @@ public interface IContractService {
     Contract updateContract(Contract contract);
     void DeleteContract(Integer idC);
    public Contract retrieveContract(Integer idC);
+
 void addaffectContractToUser(Contract contract ,Long userID);
+    String isContractActive(int id);
+
+
 }

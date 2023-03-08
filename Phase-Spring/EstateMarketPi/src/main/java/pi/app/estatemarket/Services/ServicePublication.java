@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
 import pi.app.estatemarket.Entities.UserApp;
@@ -12,8 +13,7 @@ import pi.app.estatemarket.Repository.LikeRepository;
 import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -53,29 +53,38 @@ public class ServicePublication implements IServicePublication {
     }
 
     @Override
-    public Publication retrievePublication(Integer IdPublication) {
-        Publication post = publicationRepository.findById(IdPublication).orElse(null);
+    public Publication retrievePublication(Integer IdPublication) throws Exception {
+        Optional<Publication> optionalPublication = publicationRepository.findById(IdPublication);
+        if (!optionalPublication.isPresent()) {
+            throw new Exception("Publication with Id " + IdPublication + " does not exist.");
+        }
+        Publication post = optionalPublication.get();
         post.incrementViews(); // incrémente le nombre de vues à chaque consultation
         publicationRepository.save(post);
         return post;
     }
-
     @Override
-    public void removePublication(Integer IdPublication) {
-        publicationRepository.deleteById(IdPublication);
+    public void removePublication(Integer IdPublication) throws Exception {
+        Optional<Publication> optionalPublication = publicationRepository.findById(IdPublication);
+        if (!optionalPublication.isPresent()) {
+            throw new Exception("Publication with Id " + IdPublication + " does not exist.");
+        }
+        Publication publication = optionalPublication.get();
+        publicationRepository.delete(publication);
     }
 
     @Override
     public Publication addAndAffectPublicationTouser(Publication publication, Long userID) throws Exception{
-
-        UserApp user = userRepository.findById(userID).orElse(null);
+        UserApp user = userRepository.findById(userID).orElseThrow(() -> new Exception("User does not exist."));
         publication.setUserAppPub(user);
+
         for (Publication existingPublication : getAllPublications()) {
             double similarity = new JaroWinklerSimilarity().apply(existingPublication.getDescriptionPublication(), publication.getDescriptionPublication());
             if (similarity > 0.8) { // Set a threshold for similarity
                 throw new Exception("A similar publication already exists.");
             }
         }
+
         return publicationRepository.save(publication);
     }
 
@@ -113,6 +122,19 @@ public class ServicePublication implements IServicePublication {
         like.setUserL(user);
         likeRepository.save(like);
     }
+    @Override
+    public void interdireCommentaires(int IdPublication, long userID) throws Exception {
+        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
+        UserApp user = userRepository.findById(userID).orElse(null);
 
+        // Vérifier si l'utilisateur est autorisé à interdire les commentaires
+        if (publication.getUserAppPub().equals(user)) {
+            // Interdire les commentaires sur la publication
+            publication.setCommentsEnabled(false);
+            publicationRepository.save(publication);
+        } else {
+            throw new Exception("You are not authorized to disable comments on this post.");
+        }
+    }
 
 }

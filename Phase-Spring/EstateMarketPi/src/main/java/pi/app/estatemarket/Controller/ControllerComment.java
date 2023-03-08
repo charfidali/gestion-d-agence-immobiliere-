@@ -8,9 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import pi.app.estatemarket.Entities.Comment;
 import pi.app.estatemarket.Services.IServiceComment;
 import pi.app.estatemarket.dto.CommentDTO;
-import pi.app.estatemarket.dto.UserDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -27,43 +25,40 @@ public class ControllerComment {
 
     @PutMapping("/UpdateComment/{IdComment}")
     Comment updateComment(@PathVariable int IdComment, @RequestBody Comment comm) throws Exception {
-try {
-    return iServiceComment.updateComment(IdComment, comm);
-} catch (Exception e){
-    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
-}
+        try {
+            return iServiceComment.updateComment(IdComment, comm);
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
+        }
 
     }
 
     @GetMapping("/retrieveComment/{IdComment}")
-    Comment retrieveComment(Integer IdComment) throws Exception {
+    public Comment retrieveComment(@PathVariable int IdComment) throws Exception{
+        return iServiceComment.retrieveComment(IdComment);
+
+    }
+
+    @DeleteMapping("/DeleteComment/{IdComment}")
+    ResponseEntity<String> removeComment(@PathVariable Integer IdComment) throws Exception {
         try {
-            return iServiceComment.retrieveComment(IdComment);
-        } catch (Exception e) {
+            iServiceComment.removeComment(IdComment);
+            return ResponseEntity.ok("Comment with with Id " + IdComment + " has been successfully deleted");
+        } catch (Exception e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
         }
     }
 
-    @DeleteMapping("/DeleteComment/{IdComment}")
-    ResponseEntity<String> removeComment(Integer IdComment) throws Exception {
-try {
-    iServiceComment.removeComment(IdComment);
-    return ResponseEntity.ok("Comment with with Id " + IdComment + " has been successfully deleted");
-} catch (Exception e){
-    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
-}
-    }
-
     @PostMapping("/ajouterEtAffecterCommentaireAUserEtCommentaire/{userID}/{IdPublication}")
-    public ResponseEntity<String> ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication) throws Exception {
-
-      try {
-          iServiceComment.ajouterEtAffecterCommentaireAUserEtCommentaire(comment, userID, IdPublication);
-          return ResponseEntity.ok("Comment added to Pub with Id " + IdPublication + " by user with Id " + userID);
-      } catch (Exception e){
-          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting Comment: " + e.getMessage());
-      }
+    public ResponseEntity<String> ajouterEtAffecterCommentaireAUserEtCommentaire(@RequestBody Comment comment, @PathVariable Long userID, @PathVariable int IdPublication) {
+        try {
+            iServiceComment.ajouterEtAffecterCommentaireAUserEtCommentaire(comment, userID, IdPublication);
+            return ResponseEntity.ok("Comment added to Pub with Id " + IdPublication + " by user with Id " + userID);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding Comment: " + e.getMessage());
+        }
     }
+
     //-------------------------
 
 
@@ -76,6 +71,23 @@ try {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding Report: " + e.getMessage());
         }
     }
+
+
+
+    //----------
+    @PostMapping("/PinComment/{IdPublication}/{userID}/{idComment}")
+    public ResponseEntity<String> epinglerCommentaire(@PathVariable Long userID, @PathVariable int IdPublication, @PathVariable int idComment) {
+        try {
+
+            iServiceComment.epinglerCommentaire(userID, IdPublication, idComment);
+            return ResponseEntity.ok("Comment pinned successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
+        }
+    }
+
+
 }
 
 
@@ -98,4 +110,3 @@ try {
     public List<Comment> getAllFilteredComments() {
         return iServiceComment.getAllFilteredComments();
     }*/
-

@@ -16,7 +16,11 @@ import pi.app.estatemarket.Services.IContractService;
 
 
 @Controller
+
+@RequestMapping("/api/chatwork")
+
 //@RequestMapping("/api/chat")
+
 //@AllArgsConstructor
 public class ChatController {
 

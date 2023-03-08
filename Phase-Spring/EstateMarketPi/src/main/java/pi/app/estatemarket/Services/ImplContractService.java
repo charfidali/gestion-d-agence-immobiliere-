@@ -14,7 +14,9 @@ import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.ContractDTO;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,16 +25,19 @@ import java.util.stream.Collectors;
 @Slf4j
 
 public class ImplContractService implements IContractService {
+
+
    // @Autowired
     private final ContractRepository contractRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+
     @Autowired
     JavaMailSender javaMailSender;
 
     public List<ContractDTO> getAllContracts() {
         List<Contract> contracts = contractRepository.findAll();
-        return getAllContracts().stream()
+        return contracts.stream()
                 .map(contract -> modelMapper.map(contract, ContractDTO.class))
                 .collect(Collectors.toList());
     }
@@ -55,23 +60,45 @@ public class ImplContractService implements IContractService {
 
     @Override
     public void addaffectContractToUser(Contract contract, Long userID) {
-        UserApp user=userRepository.findById(userID).orElse(null);
+        UserApp user = userRepository.findById(userID).orElse(null);
         contract.setUserAppContract(user);
         contractRepository.save(contract);
-        
-         
-         		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-			simpleMailMessage.setFrom("schoolesprit1@gmail.com");
-			
-			//simpleMailMessage.setTo(user.getEmailAddress());
 
-			simpleMailMessage.setTo("yossr.boushih@esprit.tn");
-			simpleMailMessage.setSubject("Nouveau Contrat !");
-			simpleMailMessage.setText(" cher Admin du site Estate Markest vous avez ajouter un nouveau contrat");
-			javaMailSender.send(simpleMailMessage);
-         
-        
-        
-        
+
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("schoolesprit1@gmail.com");
+
+        //simpleMailMessage.setTo(user.getEmailAddress());
+
+        simpleMailMessage.setTo("yossr.boushih@esprit.tn");
+        simpleMailMessage.setSubject("Nouveau Contrat !");
+        simpleMailMessage.setText(" cher Admin du site Estate Markest vous avez ajouter un nouveau contrat");
+        javaMailSender.send(simpleMailMessage);
     }
-}
+
+    @Override
+    public String isContractActive(int id) {
+        Contract contract = contractRepository.findById(id).orElse(null);
+        if(contract != null) {
+            Date currentDate = new Date();
+            long diffInMillies = Math.abs(currentDate.getTime() - contract.getEndDateContract().getTime());
+            long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            if (contract.getEndDateContract().after(currentDate)) {
+                return "Contract is active. " + diffInDays + " days remaining before expiration.";
+            } else {
+                return "Contract has been expired for " + diffInDays + " days.";
+            }
+        }
+        return "Contract not found";
+    }
+
+
+
+        }
+
+
+
+
+
+
+

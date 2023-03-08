@@ -57,20 +57,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui/**",
             "/authenticate",
             "/register",
+
+
             "/RetrieveAllPublications",
             "/UpdatePublication/**",
             "/RetrievePublication/**",
             "/DeletePublication/**",
-            "/ajouterEtAffecterPublicationAuser/**",
-            "Afficher le nombre de commentaire par publication/**",
+            "/addAndAffectPublicationTouser/**",
+            "/Afficher le nombre de commentaire par publication/**",
             "/Afficher tous les commentaire d'une publication/**",
             "/addlike/**",
+
+
             "/RetrieveAllComments",
             "/UpdateComment/**",
             "/retrieveComment/**",
             "/DeleteComment/**",
             "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
             "/reportComment/**",
+            "/api/contract/**",
+            "/pdf",
+            "/api/payment/**",
+            "/api/chatwork",
+            "/PinComment/**",
+            "/Disable comments/**",
 
             "/api/chatwork",
 
