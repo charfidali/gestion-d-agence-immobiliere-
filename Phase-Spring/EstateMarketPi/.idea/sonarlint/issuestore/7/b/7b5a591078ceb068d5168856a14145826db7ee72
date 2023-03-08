@@ -1,9 +1,0 @@
-
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÿΎ¶ϊÿÿÿÿ
-V	java:S125J"<This block of commented-out lines of code should be removed.(…όÿύÿÿÿÿ
-^
-java:S1128"<Remove this unused import 'javax.persistence.EntityManager'.(πΰΛÒύÿÿÿÿ8Κ©“ηλ0
-c
-java:S1128"ARemove this unused import 'javax.persistence.PersistenceContext'.(κ°έÒύÿÿÿÿ8Κ©“ηλ0
-L
-java:S1128"/Remove this unused import 'java.util.Calendar'.(ÿΫφ΄8Λ©“ηλ0

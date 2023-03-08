@@ -52,7 +52,7 @@ public class UserApp implements Serializable {
         @Column(name = "reset_password_token")
         private String resetPasswordToken;
         private String secret;
-        @Column
+        @Column(name = "gender")
         @Enumerated(EnumType.STRING)
         private GenderType gender;
         @ManyToOne

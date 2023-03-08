@@ -75,9 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/DeleteComment/**",
             "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
             "/reportComment/**",
-            "/api/contract/**",
             "/pdf",
-            "/api/payment/**",
             "/api/chatwork",
             "/PinComment/**",
             "/Disable comments/**"

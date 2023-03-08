@@ -71,7 +71,7 @@ public class PDFGeneratorService {
 			    .forEach(headerTitle -> {
 			          PdfPCell header = new PdfPCell();
 			          Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-			          header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+			          header.setBackgroundColor(BaseColor.MAGENTA);
 			          header.setHorizontalAlignment(Element.ALIGN_CENTER);
 			          header.setBorderWidth(2);
 			          header.setPhrase(new Phrase(headerTitle, headFont));
