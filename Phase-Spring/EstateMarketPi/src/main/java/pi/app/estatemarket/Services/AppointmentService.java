@@ -230,34 +230,41 @@ public class AppointmentService implements IAppointmentService {
 
 
     @Override
-    public Map<String, Object> getAppointmentStatistics() {
-      /* Map<String, Object> statistics = new HashMap<>();
+    public List<Object> getAppointmentStatistics() {
+        List<Object> statistics = new ArrayList<>();
 
-        // nmbre total de rendez-vous
+        // Nombre total de rendez-vous
         long totalAppointments = appointmentRepository.count();
-        statistics.put("totalAppointments", totalAppointments);
+        statistics.add(totalAppointments);
 
-        // nmbre de rendez-vous pour chaque utilisateur
+        // Nombre de rendez-vous pour chaque utilisateur
         List<Object[]> appointmentsPerUser = appointmentRepository.countAppointmentsPerUser();
-        Map<String, Long> appointmentsPerUserMap = new HashMap<>();
+        List<Object> appointmentsPerUserList = new ArrayList<>();
         for (Object[] result : appointmentsPerUser) {
-            appointmentsPerUserMap.put(result[0].toString(), (Long) result[1]);
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("user", result[0].toString());
+            userMap.put("appointments", (Long) result[1]);
+            appointmentsPerUserList.add(userMap);
         }
-        statistics.put("appointmentsPerUser", appointmentsPerUserMap);
+        statistics.add(appointmentsPerUserList);
 
-        // nmbre de rendez-vous pour chaque annonce
+        // Nombre de rendez-vous pour chaque annonce
         List<Object[]> appointmentsPerAnnouncement = appointmentRepository.countAppointmentsPerAnnouncement();
-        Map<String, Long> appointmentsPerAnnouncementMap = new HashMap<>();
+        List<Object> appointmentsPerAnnouncementList = new ArrayList<>();
         for (Object[] result : appointmentsPerAnnouncement) {
-            appointmentsPerAnnouncementMap.put(result[0].toString(), (Long) result[1]);
+            Map<String, Object> announcementMap = new HashMap<>();
+            announcementMap.put("announcement", result[0].toString());
+            announcementMap.put("appointments", (Long) result[1]);
+            appointmentsPerAnnouncementList.add(announcementMap);
         }
-        statistics.put("appointmentsPerAnnouncement", appointmentsPerAnnouncementMap);
+        statistics.add(appointmentsPerAnnouncementList);
 
         // Moyenne de rendez-vous par utilisateur
         double averageAppointmentsPerUser = appointmentRepository.averageAppointmentsPerUser();
-        statistics.put("averageAppointmentsPerUser", averageAppointmentsPerUser);
+        statistics.add(averageAppointmentsPerUser);
 
-       */ return null;
+        return statistics;
     }
+
 
 }

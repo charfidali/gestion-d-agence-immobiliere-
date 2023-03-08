@@ -34,7 +34,7 @@ public interface IAppointmentService {
 
     //  List<Object[]> getTrendsByDayOfWeek();
     int getNombreRendezVousParuser(Long id);
-    Map<String, Object> getAppointmentStatistics();
+    List<Object> getAppointmentStatistics();
 
     // Map<String, Integer> getTrendsByDayOfWeek();
 

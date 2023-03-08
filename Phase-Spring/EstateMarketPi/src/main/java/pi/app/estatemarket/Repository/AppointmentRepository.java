@@ -23,13 +23,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Long> {
 
     List<Appointment> findByUsersUserID(Long id);
 
- //  @Query("SELECT u.firstName, count(a) FROM appointment a JOIN a.users u GROUP BY u")
-  //  List<Object[]> countAppointmentsPerUser();
+    @Query("SELECT u.firstName, count(a) FROM appointment a JOIN a.users u GROUP BY u")
+    List<Object[]> countAppointmentsPerUser();
 
-  // @Query("SELECT ann.title, count(a) FROM appointment a JOIN a.announcementApp ann GROUP BY ann")
-  // List<Object[]> countAppointmentsPerAnnouncement();
+    @Query("SELECT ann.title, count(a) FROM appointment a JOIN a.announcementApp ann GROUP BY ann")
+    List<Object[]> countAppointmentsPerAnnouncement();
 
     @Query("SELECT avg(a.users.size) FROM appointment a")
     double averageAppointmentsPerUser();
-
 }

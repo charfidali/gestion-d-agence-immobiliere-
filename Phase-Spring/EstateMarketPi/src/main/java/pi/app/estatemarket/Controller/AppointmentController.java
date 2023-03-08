@@ -90,7 +90,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointmentStatistics")
-    public Map<String, Object> getAppointmentStatistics() {
+    public List<Object> getAppointmentStatistics() {
         return iAppointmentService.getAppointmentStatistics();
     }
 
