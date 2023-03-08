@@ -80,11 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/payment/**",
             "/api/chatwork",
             "/PinComment/**",
-            "/Disable comments/**",
+            "/Disable comments/**"
 
-            "/api/chatwork",
-
-            "/chat"
 
 
             // other public endpoints of your API may be appended to this array
@@ -108,28 +105,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/api/role/**","/api/user/**","/api/contract/**","/pdf").hasRole("ADMIN")
-                .antMatchers("/api/user/**","/logout","/api/payment/**").hasRole("USER")
-
-               // .antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
+                .antMatchers("/api/user/**","/api/payment/**").hasRole("USER")
+                //.antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
                 .antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
-
-
                 .and().formLogin().loginPage("/login")
                 .and().logout()
-                .logoutUrl("/logout").logoutSuccessUrl("/login").addLogoutHandler(logoutHandler)
+                .logoutUrl("/logout")//.logoutSuccessUrl("/login")//.addLogoutHandler(logoutHandler)
                 .deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true)
                 //.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 .and().oauth2Login()
-                .failureHandler(authFail)
                 .defaultSuccessUrl("/googleAuth");
-               //.authorizationEndpoint();
+        //.failureHandler(authFail);
+
+        //.authorizationEndpoint();
 
 
-               // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
+        // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
 
-                http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                        .exceptionHandling()
-                        .accessDeniedHandler(jwtAuthenticationEntryPoint);
+        http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .accessDeniedHandler(jwtAuthenticationEntryPoint);
     }
 
 }
