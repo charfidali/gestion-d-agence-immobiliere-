@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import pi.app.estatemarket.Entities.UserApp;
 import pi.app.estatemarket.Entities.Role;
-
-
 import pi.app.estatemarket.Repository.RoleRepository;
 import pi.app.estatemarket.Repository.UserRepository;
 import pi.app.estatemarket.dto.UserDTO;
@@ -28,6 +27,8 @@ public class UserServiceImpl implements IUserService {
     private final UserRepository userRepository;
     @Autowired
     private final RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final ModelMapper modelMapper;
 
@@ -43,9 +44,10 @@ public class UserServiceImpl implements IUserService {
     public UserApp createUser(UserRequest userRequest) {
         Role role=roleRepository.findById(userRequest.getRole_id()).orElse(null);
         //log.info("{}",userRequest.getRole_id());
-        //log.info("roleid from role{}",role.getRoleId());
+        log.info("roleid from role{}",role.getRoleId());
         //User user= new User();
         UserApp user=modelMapper.map(userRequest, UserApp.class);
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setRole(role);
         return userRepository.save(user);
     }
@@ -70,4 +72,6 @@ public class UserServiceImpl implements IUserService {
         UserApp userApp =userRepository.findById(id).orElse(null);
         return modelMapper.map(userApp, UserDTO.class);
     }
+
+
 }

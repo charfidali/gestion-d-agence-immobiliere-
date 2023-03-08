@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -48,6 +49,12 @@ public class UserApp implements Serializable {
         @Enumerated(EnumType.STRING)
         @Column(name = "gender")
         private GenderType gender;
+        @Column(name = "verification_code", length = 64)
+        private String verificationCode;
+        private boolean enabled;
+        @Column(name = "reset_password_token")
+        private String resetPasswordToken;
+        private String secret;
         @ManyToOne
         @JoinColumn(name = "role_id")
         private Role role;
@@ -63,23 +70,20 @@ public class UserApp implements Serializable {
         @JsonIgnore
         @OneToMany(mappedBy = "userAppAgency")
         private Set<Agency> agencies;
+
         @JsonIgnore
         @OneToMany(mappedBy = "userAppContract")
         private Set<Contract> contracts;
         @JsonIgnore
         @OneToMany(mappedBy = "userAppAnnouncement")
         private Set<Announcement> announcements;
+
         @JsonIgnore
-        @ManyToMany
-        private Set<UserApp> appointments;
-
-
-
+        @ManyToMany(cascade = CascadeType.ALL, mappedBy = "users")
+        private List<Appointment> appointments;
 
         @OneToMany(mappedBy = "userL")
         private List<Likee> likeList;
-
-
 
         @JsonBackReference
         public Role getRole() {

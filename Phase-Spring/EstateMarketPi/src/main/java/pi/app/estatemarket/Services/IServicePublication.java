@@ -6,7 +6,7 @@ import pi.app.estatemarket.Entities.Publication;
 import java.util.List;
 
 public interface IServicePublication {
-   // List<Publication> retrieveAllPublications();
+    // List<Publication> retrieveAllPublications();
 
     List<Publication> getAllPublications();
 

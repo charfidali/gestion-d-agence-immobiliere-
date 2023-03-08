@@ -25,11 +25,11 @@ public class ControllerComment {
 
     @PutMapping("/UpdateComment/{IdComment}")
     Comment updateComment(@PathVariable int IdComment, @RequestBody Comment comm) throws Exception {
-try {
-    return iServiceComment.updateComment(IdComment, comm);
-} catch (Exception e){
-    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
-}
+        try {
+            return iServiceComment.updateComment(IdComment, comm);
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
+        }
 
     }
 
@@ -41,12 +41,12 @@ try {
 
     @DeleteMapping("/DeleteComment/{IdComment}")
     ResponseEntity<String> removeComment(@PathVariable Integer IdComment) throws Exception {
-try {
-    iServiceComment.removeComment(IdComment);
-    return ResponseEntity.ok("Comment with with Id " + IdComment + " has been successfully deleted");
-} catch (Exception e){
-    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
-}
+        try {
+            iServiceComment.removeComment(IdComment);
+            return ResponseEntity.ok("Comment with with Id " + IdComment + " has been successfully deleted");
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with ID " + IdComment + " does not exist.", e);
+        }
     }
 
     @PostMapping("/ajouterEtAffecterCommentaireAUserEtCommentaire/{userID}/{IdPublication}")
@@ -110,4 +110,3 @@ try {
     public List<Comment> getAllFilteredComments() {
         return iServiceComment.getAllFilteredComments();
     }*/
-

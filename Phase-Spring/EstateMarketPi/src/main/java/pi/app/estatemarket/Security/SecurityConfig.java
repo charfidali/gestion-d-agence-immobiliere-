@@ -6,11 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pi.app.estatemarket.Services.CustomUserDetailsService;
 
@@ -26,6 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    private LogoutService logoutHandler;
+
+
+    @Autowired
+    private AuthenticationFailureHandler authFail;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -33,6 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private static final String[] AUTH_WHITELIST = {
+            "/forgot_password","/reset_password","/update_password","/","/verify","/login",
+            "/googleAuth",
             // -- Swagger UI v2
             "/v2/api-docs",
             "/swagger-resources",
@@ -47,14 +58,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/authenticate",
             "/register",
 
+
             "/RetrieveAllPublications",
             "/UpdatePublication/**",
             "/RetrievePublication/**",
             "/DeletePublication/**",
             "/addAndAffectPublicationTouser/**",
             "/countCommentsByPublication/{idPublication}/**",
+            "/Afficher le nombre de commentaire par publication/**",
             "/Afficher tous les commentaire d'une publication/**",
             "/addlike/**",
+
 
             "/RetrieveAllComments",
             "/UpdateComment/**",
@@ -63,7 +77,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
             "/reportComment/**",
             "/PinComment/**",
-            "/Disable comments/**"
+            "/Disable comments/**",
+
+            "/api/contract/**",
+            "/pdf",
+            "/api/payment/**",
+            "/api/chatwork",
+            "/PinComment/**",
+            "/Disable comments/**",
+
+            "/api/chatwork",
+
+            "/chat"
 
 
             // other public endpoints of your API may be appended to this array
@@ -72,6 +97,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+
     }
 
     @Bean
@@ -83,13 +109,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/api/role/**","/api/user/**").hasRole("ADMIN")
-                .antMatchers("/api/user").hasRole("USER")
+                .authorizeRequests().antMatchers("/api/role/**","/api/user/**","/api/contract/**","/pdf").hasRole("ADMIN")
+                .antMatchers("/api/user/**","/logout","/api/payment/**").hasRole("USER")
+
+               // .antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
                 .antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
-                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
-                and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and().addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+
+                .and().formLogin().loginPage("/login")
+                .and().logout()
+                .logoutUrl("/logout").logoutSuccessUrl("/login").addLogoutHandler(logoutHandler)
+                .deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true)
+                //.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+                .and().oauth2Login()
+                .failureHandler(authFail)
+                .defaultSuccessUrl("/googleAuth");
+               //.authorizationEndpoint();
+
+
+               // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
+
+                http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                        .exceptionHandling()
+                        .accessDeniedHandler(jwtAuthenticationEntryPoint);
     }
 
 }

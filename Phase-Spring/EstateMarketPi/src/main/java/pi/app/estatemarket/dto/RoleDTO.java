@@ -1,7 +1,6 @@
 package pi.app.estatemarket.dto;
 
 import lombok.*;
-
 import java.util.Date;
 @Data
 @Getter

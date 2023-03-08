@@ -1,9 +1,10 @@
 package pi.app.estatemarket.Security;
 
 import java.io.IOException;
-
+import io.jsonwebtoken.Jwts;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,24 +22,24 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtUtil jwtTokenUtil;
+     public static String jwtToken;
+    public static UserDetails userDetails;
+
+    public static UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        // JWT Token is in the form "Bearer token". Remove Bearer word and
-        // get  only the Token
-        String jwtToken = extractJwtFromRequest(request);
+         jwtToken = extractJwtFromRequest(request);
 
         if (StringUtils.hasText(jwtToken) && jwtTokenUtil.validateToken(jwtToken)) {
-            UserDetails userDetails = new User(jwtTokenUtil.getUsernameFromToken(jwtToken), "",
+              userDetails = new User(jwtTokenUtil.getUsernameFromToken(jwtToken), "",
                     jwtTokenUtil.getRolesFromToken(jwtToken));
 
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+             usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());
-            // After setting the Authentication in the context, we specify
-            // that the current user is authenticated. So it passes the
-            // Spring Security Configurations successfully.
+
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         } else {
             System.out.println("Cannot set the Security Context");
@@ -53,5 +54,10 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
         }
         return null;
     }
+
+
+
+
+
 
 }
