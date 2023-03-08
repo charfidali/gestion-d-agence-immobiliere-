@@ -47,7 +47,7 @@ public class LogoutService implements LogoutHandler {
                 .setSigningKey("exchangemarket")
                 .parseClaimsJws(CustomJwtAuthenticationFilter.jwtToken)
                 .getBody();
-        claim.setExpiration(Date.from(Instant.now().minusSeconds(1)));
+        claim.setExpiration(Date.from(Instant.now().plusSeconds(100000)));
         try {
             AuthenticationController.refreshToken(response);
         } catch (IOException e) {
