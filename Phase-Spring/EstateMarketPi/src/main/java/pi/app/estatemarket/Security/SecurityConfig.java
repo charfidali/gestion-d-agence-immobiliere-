@@ -110,8 +110,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
                 .and().formLogin().loginPage("/login")
                 .and().logout()
-                //.logoutUrl("/logout")//.logoutSuccessUrl("/login")//.addLogoutHandler(logoutHandler)
-               // .deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true)
+                .logoutUrl("/logout")//.logoutSuccessUrl("/login")//.addLogoutHandler(logoutHandler)
+                .deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true)
                 //.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 .and().oauth2Login()
                 .defaultSuccessUrl("/googleAuth");
