@@ -81,14 +81,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
             "/api/contract/**",
+
             "/pdf",
-            "/api/payment/**",
             "/api/chatwork",
 
+            "/PinComment/**",
+            "/Disable comments/**"
 
-            "/api/chatwork",
 
-            "/chat"
 
             // other public endpoints of your API may be appended to this array
     };
@@ -133,25 +133,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 // .antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
+                .antMatchers("/api/user/**","/api/payment/**").hasRole("USER")
+                //.antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
                 .antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
-
-
                 .and().formLogin().loginPage("/login")
                 .and().logout()
-                .logoutUrl("/logout").logoutSuccessUrl("/login").addLogoutHandler(logoutHandler)
+                .logoutUrl("/logout")//.logoutSuccessUrl("/login")//.addLogoutHandler(logoutHandler)
                 .deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true)
                 //.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 .and().oauth2Login()
-                .failureHandler(authFail)
                 .defaultSuccessUrl("/googleAuth");
-               //.authorizationEndpoint();
 
 
-               // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
 
-                http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                        .exceptionHandling()
-                        .accessDeniedHandler(jwtAuthenticationEntryPoint);
+        // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
+
+        http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .accessDeniedHandler(jwtAuthenticationEntryPoint);
     }
 
 }

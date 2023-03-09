@@ -23,7 +23,6 @@ public class Contract implements Serializable {
     private Date EndDateContract;
     private String TypeContract;
     private String status;
-    private String signature;
     @JsonIgnore
 
     @ManyToOne
