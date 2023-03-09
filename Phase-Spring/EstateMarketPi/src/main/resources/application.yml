@@ -12,3 +12,32 @@
     account_sid: AC8f7c763c17c52a3092a54ce299689286
     auth_token: 313e19a22bef5ab13af5bdb93273c739
     trial_number: +15674092533
+
+  swagger: '2.0'
+  info:
+    version: 1.0.0
+    title: Bearer auth example
+    description: >
+      An example for how to use Bearer Auth with OpenAPI / Swagger 2.0.
+
+  host: basic-auth-server.herokuapp.com
+  schemes:
+    - http
+    - https
+  securityDefinitions:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: >-
+        Enter the token with the `Bearer: ` prefix, e.g. "Bearer abcde12345".
+  paths:
+    /:
+      get:
+        security:
+          - Bearer: [ ]
+        responses:
+          '200':
+            description: 'Will send `Authenticated`'
+          '403':
+            description: 'You do not have necessary permissions for the resource'
