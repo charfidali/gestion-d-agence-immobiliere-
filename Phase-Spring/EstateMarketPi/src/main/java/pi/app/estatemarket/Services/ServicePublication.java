@@ -44,7 +44,7 @@ public class ServicePublication implements IServicePublication {
     public Publication updatePublication(int ID, Publication publication) {
         return publicationRepository.findById(ID)
                 .map(publication1 -> {
-                    publication1.setDatePublication(publication.getDatePublication());
+                   publication1.setDatePublication(publication.getDatePublication());
                     publication1.setDescriptionPublication(publication.getDescriptionPublication());
                     publication1.setTitrePub(publication.getTitrePub());
                     return publicationRepository.save(publication1);
@@ -114,7 +114,7 @@ public class ServicePublication implements IServicePublication {
         if (likeRepository.existsByPostAndUserL(post, user)) {
             throw new Exception("User " + idUser + " has already liked the post " + idPost);
         }
-        post.setNombreLike(post.getNombreLike() + 1);
+       post.setNombreLike(post.getNombreLike() + 1);
         publicationRepository.save(post);
         Likee like = new Likee();
         like.setPost(post);

@@ -2,31 +2,39 @@ package pi.app.estatemarket.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import java.util.Date;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
 import java.util.*;
+import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 
-
+@Data
 @Entity(name = "publication")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Publication implements Serializable {
+public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int IdPublication;
+    @Column(nullable = false)
     private String TitrePub;
-    private String DescriptionPublication;
-    @Temporal(TemporalType.TIMESTAMP)
+
+
+   @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, updatable = false)
+    //updatable = false empêche toute modification de la date de publication une fois que l'objet a été créé
+
     private Date DatePublication;
 
-    private int nombreLike = 0;
 
+    @Column(nullable = false)
+    private String DescriptionPublication;
+
+    @Column(nullable = false)
+   private int nombreLike = 0;
     @JsonIgnore
     @ManyToOne
     private UserApp userAppPub;
@@ -42,12 +50,12 @@ public class Publication implements Serializable {
     @OneToMany(mappedBy = "commPub")
     private Set<Comment> commentsPub;
 
-    @PrePersist
+   @PrePersist
     protected void onCreate() {
-
         DatePublication = new Date();
     }
 
+    @Column(nullable = false)
     private Integer views; // attribut pour stocker le nombre de vues du post
 
 
@@ -55,16 +63,14 @@ public class Publication implements Serializable {
         this.views++;
     }
 
-
-    private Boolean commentsEnabled = true;
-
     //-------
     @OneToOne
     @JoinColumn(name = "pinned_comment_id")
     private Comment pinnedComment;
 
     //-------
-     // attribut pour déterminer si les commentaires sont autorisés ou non
+    @Column(nullable = false)
+   private Boolean commentsEnabled = true; // attribut pour déterminer si les commentaires sont autorisés ou non
 
 
 }

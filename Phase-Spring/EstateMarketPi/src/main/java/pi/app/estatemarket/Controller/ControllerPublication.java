@@ -84,7 +84,7 @@ public class ControllerPublication {
         }
     }
 
-    @PostMapping("/Disable comments/{publicationId}/{userID}")
+   @PostMapping("/Disable comments/{publicationId}/{userID}")
     public ResponseEntity<String> interdireCommentaires(@PathVariable int publicationId, @PathVariable Long userID) {
         try {
             Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new Exception("Publication with ID " + publicationId + " does not exist."));

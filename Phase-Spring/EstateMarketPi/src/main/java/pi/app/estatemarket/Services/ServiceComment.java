@@ -75,9 +75,9 @@ public class ServiceComment implements IServiceComment {
     public void ajouterEtAffecterCommentaireAUserEtCommentaire(Comment comment, Long userID, int IdPublication) throws Exception {
         UserApp user = userRepository.findById(userID).orElseThrow(() -> new Exception("User with ID " + userID + " does not exist."));
         Publication publication = publicationRepository.findById(IdPublication).orElseThrow(() -> new Exception("Publication with ID " + IdPublication + " does not exist."));
-        if (!publication.getCommentsEnabled()) {
+/*        if (!publication.getCommentsEnabled()) {
             throw new Exception("Comments are disabled for this post.");
-        }
+        }*/
         comment.setCommPub(publication);
         comment.setUserAppComment(user);
         String descriptionFiltree = filtrerMotsInterdits(comment.getDescriptionCommentaire());
