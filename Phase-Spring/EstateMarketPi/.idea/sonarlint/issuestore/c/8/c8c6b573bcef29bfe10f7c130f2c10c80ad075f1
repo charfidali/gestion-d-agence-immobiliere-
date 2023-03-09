@@ -1,4 +1,15 @@
 
 t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ËáÞ›ýÿÿÿÿ
+i
+java:S1128"NRemove this unused import 'org.springframework.data.jpa.repository.Modifying'.(—·Ñ”þÿÿÿÿ
+b
+java:S1128"LRemove this unused import 'org.springframework.data.repository.query.Param'.(©”šô
 
-java:S1128"dRemove this unused import 'org.springframework.security.core.userdetails.UsernameNotFoundException'.(Í£Ö¶ùÿÿÿÿ
+java:S1128
+"dRemove this unused import 'org.springframework.security.core.userdetails.UsernameNotFoundException'.(Í£Ö¶ùÿÿÿÿ
+W
+java:S1128"<Remove this unused import 'javax.transaction.Transactional'.(ûÒçÑúÿÿÿÿ
+F
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
+J
+java:S1128"/Remove this unused import 'java.util.Optional'.(¨˜ëÝüÿÿÿÿ

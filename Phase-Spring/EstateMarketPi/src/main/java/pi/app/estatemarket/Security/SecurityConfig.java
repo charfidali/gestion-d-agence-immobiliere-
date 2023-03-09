@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
             "/forgot_password","/reset_password","/update_password","/","/verify","/login",
             "/googleAuth",
+            "/affecterUserAppointment/{IdAppointment}/{userID}",
             // -- Swagger UI v2
             "/v2/api-docs",
             "/swagger-resources",
@@ -86,7 +87,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/chatwork",
 
             "/PinComment/**",
-            "/Disable comments/**"
+            "/Disable comments/**",
+            "/afficherAppointments","/supAppointment/{id}","/updateAppointment/{id}","/  available-dates/{userId}/{userId2}",
+            "/checkAvailability/{userId1}/{userId2}","/RDV/{userId1}/{userId2}",
+            "/nombrederendezvous/{id}","/appointmentStatistics" , "/addAppointment"
 
 
 
@@ -110,6 +114,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
+<<<<<<< HEAD
+                .authorizeRequests().antMatchers("/api/role/**","/api/user/**","/api/contract/**","/pdf","/addAppointment").hasRole("ADMIN")
+=======
                 .authorizeRequests().antMatchers("/api/role/**","/api/user/**","/api/contract/**","/pdf").hasRole("ADMIN")
                 .antMatchers("/api/user/**","/api/payment/**","/addAppointment").hasRole("USER")
 
@@ -118,7 +125,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 // .antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
+>>>>>>> 8f3f596ca9609150e8763c0d5369cb363f522256
                 .antMatchers("/api/user/**","/api/payment/**").hasRole("USER")
+                .antMatchers( ).hasAnyRole("USER","ADMIN")
                 //.antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
                 .antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
                 .and().formLogin().loginPage("/login")

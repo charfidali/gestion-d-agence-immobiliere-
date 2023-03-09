@@ -23,7 +23,7 @@ public class UserApp implements Serializable {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "user_id")
-        private long userID;
+        private Long userID;
         @Column(name = "username")
         private String username;
         @Column(name = "last_name")

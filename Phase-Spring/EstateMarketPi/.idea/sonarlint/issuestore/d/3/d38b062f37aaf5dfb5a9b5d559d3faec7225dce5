@@ -1,0 +1,13 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÿ¾¶úÿÿÿÿ
+Y
+java:S2259À"BA "NullPointerException" could be thrown; "role" is nullable here.(œ„ôÈ
+>
+java:S1125c"(Remove the unnecessary boolean literals.(î âÓ
+O	java:S106‘"9Replace this use of System.out or System.err by a logger.(ïˆŸÖ
+Z
+java:S1117ž"CRename "passwordEncoder" which hides the field declared at line 54.(‡â÷‹
+W	java:S125¿"<This block of commented-out lines of code should be removed.(ÒÄÛŸùÿÿÿÿ
+R	java:S125Á"<This block of commented-out lines of code should be removed.(ÖÇ¨Ñ
+T
+java:S1854Ë"8Remove this useless assignment to local variable "user".(úî¤øÿÿÿÿ
