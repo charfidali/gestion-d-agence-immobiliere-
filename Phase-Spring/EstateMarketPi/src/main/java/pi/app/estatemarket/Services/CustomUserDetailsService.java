@@ -166,7 +166,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             executor.schedule(() -> {
                 user.setResetPasswordToken(null);
                 userRepository.save(user);
-            }, 30, TimeUnit.SECONDS);
+            }, 3600, TimeUnit.SECONDS);
         }
     }
 

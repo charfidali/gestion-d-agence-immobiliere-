@@ -3,7 +3,6 @@ package pi.app.estatemarket.Services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -123,11 +122,6 @@ public class AppointmentService implements IAppointmentService {
 
         appointmentRepository.save(appointment);
     }
-
-  /* @Override
-    public List<Appointment> findAppointmentsByUsersAndDate(User user1, User user2, Date start, Date end) {
-        return appointmentRepository.findAppointmentsByUsersAndDate(user1, user2, start, end);
-    }*/
 
     // @Scheduled(fixedRate = 10000)
     public void RappelerSurRendezVous() {

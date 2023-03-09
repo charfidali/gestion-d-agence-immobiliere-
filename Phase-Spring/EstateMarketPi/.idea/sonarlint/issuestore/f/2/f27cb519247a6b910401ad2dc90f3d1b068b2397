@@ -1,0 +1,60 @@
+
+`	java:S112)"FDefine and throw a dedicated exception instead of using a generic one.(Ğæãëúÿÿÿÿ
+Z	java:S112,"FDefine and throw a dedicated exception instead of using a generic one.(¦©ØN
+`	java:S112Z"FDefine and throw a dedicated exception instead of using a generic one.(Ğæãëúÿÿÿÿ
+Z	java:S112_"FDefine and throw a dedicated exception instead of using a generic one.(¦©ØN
+m	java:S117u"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬šÖ8ªŠç™ì0
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÿ¾¶úÿÿÿÿ
+f
+java:S2259y"IA "NullPointerException" could be thrown; "appointment" is nullable here.(â‘Æø8ñ‹ç™ì0
+X
+java:S1854%"=Remove this useless assignment to local variable "listusers".(™—¹‘ùÿÿÿÿ
+I
+java:S1481%".Remove this unused "listusers" local variable.(™—¹‘ùÿÿÿÿ
+Q
+java:S1854<";Remove this useless assignment to local variable "message".(Šï™â
+B
+java:S1481<",Remove this unused "message" local variable.(Šï™â
+H
+java:S1135B"2Complete the task associated to this TODO comment.(‡ñÅ¼
+Q	java:S125h"<This block of commented-out lines of code should be removed.(Ê±ƒ¶
+Q	java:S125j"<This block of commented-out lines of code should be removed.(®£Ü
+X	java:S125x"<This block of commented-out lines of code should be removed.(Úî’ü8ù‹ç™ì0
+j	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îÃáÓ8¯£Ğ˜ì0
+Q
+java:S1854‚"5Remove this useless assignment to local variable "a".(»ò®•ıÿÿÿÿ
+K
+java:S1874‚"/Remove this use of "getDate"; it is deprecated.(»ò®•ıÿÿÿÿ
+B
+java:S1481‚"&Remove this unused "a" local variable.(»ò®•ıÿÿÿÿ
+F
+java:S1874…"/Remove this use of "getYear"; it is deprecated.(—±İŞ
+M
+java:S1874…"/Remove this use of "getYear"; it is deprecated.(—±İŞ8±£Ğ˜ì0
+G
+java:S1874†"0Remove this use of "getMonth"; it is deprecated.(íµ‘Ş
+N
+java:S1874†"0Remove this use of "getMonth"; it is deprecated.(íµ‘Ş8±£Ğ˜ì0
+Q
+java:S1874‡".Remove this use of "getDay"; it is deprecated.(ö¬Åşÿÿÿÿ8²£Ğ˜ì0
+Q
+java:S1874‡".Remove this use of "getDay"; it is deprecated.(ö¬Åşÿÿÿÿ8²£Ğ˜ì0
+R
+java:S1874§"/Remove this use of "getYear"; it is deprecated.(Ô¢‰ùşÿÿÿÿ8´£Ğ˜ì0
+R
+java:S1874§"/Remove this use of "getYear"; it is deprecated.(Ô¢‰ùşÿÿÿÿ8µ£Ğ˜ì0
+S
+java:S1874§"0Remove this use of "getMonth"; it is deprecated.(Ô¢‰ùşÿÿÿÿ8µ£Ğ˜ì0
+S
+java:S1874§"0Remove this use of "getMonth"; it is deprecated.(Ô¢‰ùşÿÿÿÿ8µ£Ğ˜ì0
+L
+java:S1874¨".Remove this use of "getDay"; it is deprecated.(¹ãşË8¶£Ğ˜ì0
+L
+java:S1874¨".Remove this use of "getDay"; it is deprecated.(¹ãşË8¶£Ğ˜ì0
+O	java:S106¾"9Replace this use of System.out or System.err by a logger.(º®•Œ
+R	java:S125Æ"<This block of commented-out lines of code should be removed.(ò ıÂ
+W	java:S125Ò"<This block of commented-out lines of code should be removed.( êœøÿÿÿÿ
+E
+java:S1905ğ"'Remove this unnecessary cast to "Long".(èÚÛÆ8ÅÓ‡ì0
+J
+java:S1905û"'Remove this unnecessary cast to "Long".(ŠĞÛ¬ùÿÿÿÿ8ÇÓ‡ì0

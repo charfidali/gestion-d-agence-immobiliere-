@@ -1,0 +1,41 @@
+
+`	java:S112`"FDefine and throw a dedicated exception instead of using a generic one.(êÆÖËùÿÿÿÿ
+[	java:S112b"FDefine and throw a dedicated exception instead of using a generic one.(ÈçïÕ
+g	java:S112\"FDefine and throw a dedicated exception instead of using a generic one.( ÂÑ¦üÿÿÿÿ8–àë0
+b	java:S112u"FDefine and throw a dedicated exception instead of using a generic one.(„à˜·8–àë0
+d
+java:S1192"HDefine a constant instead of duplicating this literal "message" 5 times.(¾Õ‰±øÿÿÿÿ
+o
+java:S1192Ñ"SDefine a constant instead of duplicating this literal "Invalid Credential" 5 times.(¿§•¡ùÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(’ü›É
+A
+java:S1452\"&Remove usage of generic wildcard type.( ÂÑ¦üÿÿÿÿ
+e
+java:S4488["JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(¶€»²ùÿÿÿÿ
+Q	java:S125X"<This block of commented-out lines of code should be removed.(˜³Õ
+L
+java:S2696g"6Make the enclosing method "static" or remove this set.(•ñëí
+<
+java:S1452u"&Remove usage of generic wildcard type.(„à˜·
+`
+java:S4488t"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(ÚŞ•
+P	java:S125y"<This block of commented-out lines of code should be removed.(ÆÆ­
+R	java:S125†"<This block of commented-out lines of code should be removed.(ßÉ¢×
+T	java:S106‰"9Replace this use of System.out or System.err by a logger.(Ç˜èùÿÿÿÿ
+M
+java:S2696²"6Make the enclosing method "static" or remove this set.(û«²¤
+L
+java:S2209²"5Change this instance-reference to a static reference.(û«²¤
+_
+java:S4488Á"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(Ú­Ç†
+=
+java:S1452Í"&Remove usage of generic wildcard type.(øåº¬
+T	java:S106Î"9Replace this use of System.out or System.err by a logger.(Ü®øèøÿÿÿÿ
+M
+java:S6437Û"6Revoke and change this password, as it is compromised.(Ó®…Ö
+M
+java:S2696è"6Make the enclosing method "static" or remove this set.(•ñëí
+R	java:S125ü"<This block of commented-out lines of code should be removed.(ÊÄ¿Ì
+ƒ
+java:S1130‹"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(ûİÃ¦
+R	java:S125“"<This block of commented-out lines of code should be removed.(ÊÄ¿Ì

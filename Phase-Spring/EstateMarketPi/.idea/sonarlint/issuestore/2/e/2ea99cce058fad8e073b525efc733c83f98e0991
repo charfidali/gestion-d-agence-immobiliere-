@@ -1,0 +1,25 @@
+
+m	java:S1172"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨ÀÁŠ8Ý–ì™ì0
+m	java:S1172"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨ÀÁŠ8Ý–ì™ì0
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(’ü›É
+]
+java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(Å–ì¡8Å¼£˜ì0
+b
+java:S4684-"@Replace this persistent entity with a simple POJO or DTO object.(á¥„ûÿÿÿÿ8Ç¼£˜ì0
+A
+java:S14528"&Remove usage of generic wildcard type.(‡Ñ¨³úÿÿÿÿ
+Q	java:S125>"<This block of commented-out lines of code should be removed.(ÔßÔÒ
+V	java:S125P"<This block of commented-out lines of code should be removed.(Æåç¡ùÿÿÿÿ
+s
+java:S1128"QRemove this unused import 'org.springframework.format.annotation.DateTimeFormat'.(‡ˆôƒøÿÿÿÿ8ˆ§˜ì0
+b
+java:S1128"@Remove this unused import 'org.springframework.http.HttpStatus'.(íŸ¤Šúÿÿÿÿ8ˆ§˜ì0
+^
+java:S1128
+"ARemove this unused import 'pi.app.estatemarket.Entities.UserApp'.(ž©Á8ˆ§˜ì0
+h
+java:S1128"FRemove this unused import 'pi.app.estatemarket.Services.IUserService'.(Œ´³ùÿÿÿÿ8ˆ§˜ì0
+f
+java:S1128"IRemove this unused import 'pi.app.estatemarket.Services.UserServiceImpl'.(ÀúØ8ˆ§˜ì0
+L
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ8‰§˜ì0

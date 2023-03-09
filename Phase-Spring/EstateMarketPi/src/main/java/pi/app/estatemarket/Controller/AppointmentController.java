@@ -52,8 +52,7 @@ public class AppointmentController {
     }
 
 
-
-    @GetMapping("/available-dates/{userId}/{userId2}")
+    @GetMapping("/available-dates/{userId}/{userI2}")
     public ResponseEntity<?> getAvailableDatesFinally(@PathVariable Long userId,@PathVariable Long userId2) {
         List<Date> availableDates = iAppointmentService.getAvailableDatesFinal(userId,userId2);
         return ResponseEntity.ok(availableDates);
