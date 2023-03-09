@@ -1,0 +1,7 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÿΎ¶ϊÿÿÿÿ
+h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°Υƒλώÿÿÿÿ
+Q
+java:S1128"/Remove this unused import 'java.util.Optional'.(¨λέόÿÿÿÿ8―ήελ0
+w
+java:S1128	"URemove this unused import 'pi.app.estatemarket.Services.PDFGeneratorService.RecRepo'.(ο‰ωÿÿÿÿ8°ήελ0

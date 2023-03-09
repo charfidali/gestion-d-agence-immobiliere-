@@ -58,27 +58,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/authenticate",
             "/register",
 
+            "/addAndAffectPublicationTouser/**",
 
-            "/RetrieveAllPublications",
+
+/*            "/RetrieveAllPublications",
             "/UpdatePublication/**",
             "/RetrievePublication/**",
             "/DeletePublication/**",
             "/addAndAffectPublicationTouser/**",
+            "/countCommentsByPublication/{idPublication}/**",
             "/Afficher le nombre de commentaire par publication/**",
             "/Afficher tous les commentaire d'une publication/**",
             "/addlike/**",
-
-
             "/RetrieveAllComments",
             "/UpdateComment/**",
             "/retrieveComment/**",
             "/DeleteComment/**",
             "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
             "/reportComment/**",
+            "/PinComment/**",
+            "/Disable comments/**",*/
+
+
             "/api/contract/**",
+
             "/pdf",
-            "/api/payment/**",
             "/api/chatwork",
+
             "/PinComment/**",
             "/Disable comments/**"
 
@@ -106,6 +112,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests().antMatchers("/api/role/**","/api/user/**","/api/contract/**","/pdf").hasRole("ADMIN")
                 .antMatchers("/api/user/**","/api/payment/**","/addAppointment").hasRole("USER")
+
+
+                .antMatchers("/api/user/**","/logout","/api/payment/**").hasRole("USER")
+
+
+                // .antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
+                .antMatchers("/api/user/**","/api/payment/**").hasRole("USER")
                 //.antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
                 .antMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated()
                 .and().formLogin().loginPage("/login")
@@ -114,17 +127,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("auth_code", "JSESSIONID").invalidateHttpSession(true)
                 //.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 .and().oauth2Login()
+
                 .defaultSuccessUrl("/googleAuth")
-                .failureHandler(authFail);
+                .failureHandler(authFail)
 
                //.authorizationEndpoint();
+    .defaultSuccessUrl("/googleAuth");
 
 
-               // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
 
-                http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                        .exceptionHandling()
-                        .accessDeniedHandler(jwtAuthenticationEntryPoint);
+
+        // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
+
+        http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .accessDeniedHandler(jwtAuthenticationEntryPoint);
     }
 
 }
