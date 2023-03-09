@@ -89,15 +89,9 @@
             <version>3.0.0</version>
             <scope>compile</scope>
         </dependency>
-<<<<<<< HEAD
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.9</version>
-        </dependency>
-=======
 
->>>>>>> main
+
+
         <!--  https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
