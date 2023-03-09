@@ -27,6 +27,7 @@ public interface IServicePublication {
     //-----------------------------------------
 
     void addLikeToPost(Likee likee, Integer idPost, Long idUser) throws Exception;
+    void interdireCommentaires(int IdPublication, long userID) throws Exception;
 
 
 }

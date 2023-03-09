@@ -153,20 +153,7 @@ public class ServiceComment implements IServiceComment {
     }
 
 
-    @Override
-    public void interdireCommentaires(int IdPublication, long userID) throws Exception {
-        Publication publication = publicationRepository.findById(IdPublication).orElse(null);
-        UserApp user = userRepository.findById(userID).orElse(null);
 
-        // Vérifier si l'utilisateur est autorisé à interdire les commentaires
-        if (publication.getUserAppPub().equals(user)) {
-            // Interdire les commentaires sur la publication
-            publication.setCommentsEnabled(false);
-            publicationRepository.save(publication);
-        } else {
-            throw new Exception("You are not authorized to disable comments on this post.");
-        }
-    }
 }
 
 

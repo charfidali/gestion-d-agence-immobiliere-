@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import pi.app.estatemarket.Entities.Likee;
 import pi.app.estatemarket.Entities.Publication;
+import pi.app.estatemarket.Repository.PublicationRepository;
 import pi.app.estatemarket.Services.IServicePublication;
 
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 public class ControllerPublication {
     IServicePublication iServicePublication;
+    PublicationRepository publicationRepository;
 
     @GetMapping("/RetrieveAllPublications")
     List<Publication> retrieveAllPublications() {
@@ -29,21 +30,25 @@ public class ControllerPublication {
     }
 
     @GetMapping("/RetrievePublication/{IdPublication}")
-    ResponseEntity<Publication> retrievePublication(@PathVariable Integer IdPublication) {
-
-        Publication publication = iServicePublication.retrievePublication(IdPublication);
-        return ResponseEntity.ok().body(publication);
+    public ResponseEntity<Publication> RetrievePublication(@PathVariable Integer IdPublication) {
+        try {
+            Publication publication = iServicePublication.retrievePublication(IdPublication);
+            return ResponseEntity.ok(publication);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @DeleteMapping("/DeletePublication/{IdPublication}")
-    void removePublication(@PathVariable Integer IdPublication) throws Exception {
+    public ResponseEntity<String> removePublication(@PathVariable Integer IdPublication) {
         try {
             iServicePublication.removePublication(IdPublication);
-        }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Publication with ID " + IdPublication + " does not exist.", e);
+            return ResponseEntity.ok("Publication with Id " + IdPublication + " deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Publication with Id " + IdPublication + " does not exist.");
         }
-
     }
+
 
     @PostMapping("/addAndAffectPublicationTouser/{userID}")
     public ResponseEntity<String> ajouterEtAffecterPublicationAuser(@RequestBody Publication publication, @PathVariable Long userID) throws Exception{
@@ -69,9 +74,6 @@ public class ControllerPublication {
     }
 
 
-
-//----------
-
     @PostMapping("/addlike/{idPost}/{idUser}")
     public ResponseEntity<String> addLikeToPost(@RequestBody Likee likee,  @PathVariable Integer idPost, @PathVariable Long idUser) throws Exception{
         try {
@@ -82,11 +84,22 @@ public class ControllerPublication {
         }
     }
 
-    //--------------------------
+    @PostMapping("/Disable comments/{publicationId}/{userID}")
+    public ResponseEntity<String> interdireCommentaires(@PathVariable int publicationId, @PathVariable Long userID) {
+        try {
+            Publication publication = publicationRepository.findById(publicationId).orElseThrow(() -> new Exception("Publication with ID " + publicationId + " does not exist."));
+            if (!publication.getCommentsEnabled()) {
+                throw new Exception("Comments are already disabled for this post.");
+            }
+
+            iServicePublication.interdireCommentaires(publicationId, userID);
+
+            return ResponseEntity.ok("Comments disabled successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
+    }
 
 
-    /*    @GetMapping("/Afficher toutes les publications avec les commentaires décroissants")
-    public List<Publication> getPopularPublications() {
-        return iServicePublication.getMostCommentedPublications();
-    }*/
 }

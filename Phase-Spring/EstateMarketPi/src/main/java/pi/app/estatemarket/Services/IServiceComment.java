@@ -25,7 +25,6 @@ public interface IServiceComment {
     //----------
     void epinglerCommentaire(Long userID, int IdPublication, int idComment) throws Exception;
 
-    void interdireCommentaires(int IdPublication, long userID) throws Exception;
 }
 
 

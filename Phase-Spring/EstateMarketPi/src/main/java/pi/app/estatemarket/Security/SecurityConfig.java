@@ -75,9 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/DeleteComment/**",
             "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
             "/reportComment/**",
-            "/api/contract/**",
             "/pdf",
-            "/api/payment/**",
             "/api/chatwork",
             "/PinComment/**",
             "/Disable comments/**"
@@ -115,9 +113,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 .and().oauth2Login()
                 .defaultSuccessUrl("/googleAuth");
-        //.failureHandler(authFail);
 
-        //.authorizationEndpoint();
 
 
         // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
