@@ -47,4 +47,3 @@ public class Comment implements Serializable {
 
     private int signalCount = 0;
 }
-

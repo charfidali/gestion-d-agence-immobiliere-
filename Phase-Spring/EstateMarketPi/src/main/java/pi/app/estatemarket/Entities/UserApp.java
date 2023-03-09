@@ -46,15 +46,15 @@ public class UserApp implements Serializable {
         private Date dateOfBirth;
         @Column(name = "password")
         private String password;
-        @Enumerated(EnumType.STRING)
-        @Column(name = "gender")
-        private GenderType gender;
         @Column(name = "verification_code", length = 64)
         private String verificationCode;
         private boolean enabled;
         @Column(name = "reset_password_token")
         private String resetPasswordToken;
         private String secret;
+        @Column(name = "gender")
+        @Enumerated(EnumType.STRING)
+        private GenderType gender;
         @ManyToOne
         @JoinColumn(name = "role_id")
         private Role role;
@@ -89,5 +89,8 @@ public class UserApp implements Serializable {
         public Role getRole() {
                 return role;
         }
+
+
+
 }
 

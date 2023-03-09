@@ -8,25 +8,33 @@ import java.io.Serializable;
 import java.util.*;
 import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 
-
+@Data
 @Entity(name = "publication")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Publication implements Serializable {
+public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int IdPublication;
+    @Column(nullable = false)
     private String TitrePub;
-    @Temporal(TemporalType.TIMESTAMP)
+
+
+   @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, updatable = false)
     //updatable = false empêche toute modification de la date de publication une fois que l'objet a été créé
+
     private Date DatePublication;
+
+
+    @Column(nullable = false)
     private String DescriptionPublication;
 
-    private int nombreLike = 0;
+    @Column(nullable = false)
+   private int nombreLike = 0;
     @JsonIgnore
     @ManyToOne
     private UserApp userAppPub;
@@ -38,15 +46,16 @@ public class Publication implements Serializable {
     private List<Likee> likes = new ArrayList<>();
 
 
-    //@JsonIgnore //au cas où lezemesh les commentaires yokhrjou maa les listes de pubs
+    @JsonIgnore //au cas où lezemesh les commentaires yokhrjou maa les listes de pubs
     @OneToMany(mappedBy = "commPub")
     private Set<Comment> commentsPub;
 
-    @PrePersist
+   @PrePersist
     protected void onCreate() {
         DatePublication = new Date();
     }
 
+    @Column(nullable = false)
     private Integer views; // attribut pour stocker le nombre de vues du post
 
 
@@ -60,7 +69,8 @@ public class Publication implements Serializable {
     private Comment pinnedComment;
 
     //-------
-    private Boolean commentsEnabled = true; // attribut pour déterminer si les commentaires sont autorisés ou non
+    @Column(nullable = false)
+   private Boolean commentsEnabled = true; // attribut pour déterminer si les commentaires sont autorisés ou non
 
 
 }

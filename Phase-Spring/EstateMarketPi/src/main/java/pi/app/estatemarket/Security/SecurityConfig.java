@@ -59,27 +59,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/authenticate",
             "/register",
 
+            "/addAndAffectPublicationTouser/**",
 
-            "/RetrieveAllPublications",
+
+/*            "/RetrieveAllPublications",
             "/UpdatePublication/**",
             "/RetrievePublication/**",
             "/DeletePublication/**",
             "/addAndAffectPublicationTouser/**",
+            "/countCommentsByPublication/{idPublication}/**",
             "/Afficher le nombre de commentaire par publication/**",
             "/Afficher tous les commentaire d'une publication/**",
             "/addlike/**",
-
-
             "/RetrieveAllComments",
             "/UpdateComment/**",
             "/retrieveComment/**",
             "/DeleteComment/**",
             "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
             "/reportComment/**",
+            "/PinComment/**",
+            "/Disable comments/**",*/
+
+
             "/api/contract/**",
+
             "/pdf",
-            "/api/payment/**",
             "/api/chatwork",
+
             "/PinComment/**",
             "/Disable comments/**",
             "/afficherAppointments","/supAppointment/{id}","/updateAppointment/{id}","/  available-dates/{userId}/{userId2}",
@@ -108,7 +114,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
+<<<<<<< HEAD
                 .authorizeRequests().antMatchers("/api/role/**","/api/user/**","/api/contract/**","/pdf","/addAppointment").hasRole("ADMIN")
+=======
+                .authorizeRequests().antMatchers("/api/role/**","/api/user/**","/api/contract/**","/pdf").hasRole("ADMIN")
+
+                .antMatchers("/api/user/**","/logout","/api/payment/**").hasRole("USER")
+                .antMatchers(            "/RetrieveAllPublications",
+                        "/UpdatePublication/**",
+                        "/RetrievePublication/**",
+                        "/DeletePublication/**",
+                        "/addAndAffectPublicationTouser/**",
+                        "/countCommentsByPublication/{idPublication}/**",
+                        "/Afficher le nombre de commentaire par publication/**",
+                        "/Afficher tous les commentaire d'une publication/**",
+                        "/addlike/**",
+                        "/RetrieveAllComments",
+                        "/UpdateComment/**",
+                        "/RetrieveComment/**",
+                        "/DeleteComment/**",
+                        "/ajouterEtAffecterCommentaireAUserEtCommentaire/**",
+                        "/reportComment/**",
+                        "/PinComment/**",
+                        "/Disable comments/**").hasAnyRole("USER","ADMIN","MANAGER","CHEFAGENCE")
+
+
+                // .antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
+>>>>>>> 8f3f596ca9609150e8763c0d5369cb363f522256
                 .antMatchers("/api/user/**","/api/payment/**").hasRole("USER")
                 .antMatchers( ).hasAnyRole("USER","ADMIN")
                 //.antMatchers("/api/chatwork").hasAnyRole("USER","MANAGER")
@@ -120,16 +152,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 .and().oauth2Login()
                 .defaultSuccessUrl("/googleAuth");
-                //.failureHandler(authFail);
-
-               //.authorizationEndpoint();
 
 
-               // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
 
-                http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                        .exceptionHandling()
-                        .accessDeniedHandler(jwtAuthenticationEntryPoint);
+        // .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
+
+        http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .accessDeniedHandler(jwtAuthenticationEntryPoint);
     }
 
 }

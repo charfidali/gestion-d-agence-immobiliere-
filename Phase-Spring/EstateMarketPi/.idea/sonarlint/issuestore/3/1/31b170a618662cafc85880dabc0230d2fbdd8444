@@ -1,0 +1,8 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ïµ÷ôüÿÿÿÿ
+r	java:S116"XRename this field "IdPublication" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(úñ×•úÿÿÿÿ
+m	java:S116"SRename this field "TitrePub" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡ªºêùÿÿÿÿ
+o	java:S116"ZRename this field "DatePublication" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯³²Ž
+{	java:S116"aRename this field "DescriptionPublication" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿÓÊúûÿÿÿÿ
+p
+java:S1128	"URemove this unused import 'org.apache.commons.text.similarity.JaroWinklerSimilarity'.(¨û·§øÿÿÿÿ
